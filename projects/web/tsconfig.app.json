@@ -1,0 +1,53 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "../../out-tsc/app",
+    "module": "es2015",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@core": [
+        "./src/app/core"
+      ],
+      "@core/*": [
+        "./src/app/core/*"
+      ],
+      "@shared": [
+        "./src/app/shared"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@env": [
+        "./src/environments"
+      ],
+      "@env/*": [
+        "./src/environments/*"
+      ],
+      "@testing": [
+        "./src/testing"
+      ],
+      "@testing/*": [
+        "./src/testing/*"
+      ],
+      "@utilities": [
+        "../../dist/utilities"
+      ],
+      "@utilities/*": [
+        "../../dist/utilities/*"
+      ],
+      "@store": [
+        "../../dist/store"
+      ],
+      "@store/*": [
+        "../../dist/store/*"
+      ]
+    }
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ]
+}
