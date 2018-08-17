@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 // } from '@delon/auth';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { UserService } from '@store';
+import { catchError } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
 // import { UserService } from 'store';
 
 @Component({
@@ -98,12 +100,14 @@ export class UserLoginComponent implements OnDestroy {
       .authenticate(this.userName.value, this.password.value)
       .subscribe(
         () => {
+          this.loading = false;
           setTimeout(() => {
             return this._router.navigateByUrl('/');
           }, this.REDIRECT_DELAY);
         },
-        (err: any) => {
-          this.error = err;
+        (err: HttpErrorResponse) => {
+          this.error = err.statusText;
+          this.loading = false;
         },
       );
     // this.http

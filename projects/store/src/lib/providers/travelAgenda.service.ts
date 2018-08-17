@@ -1,4 +1,4 @@
-/// <reference path="../../declarations.d.ts" />
+/// <reference path="../../typings.d.ts" />
 
 import { NgRedux } from '@angular-redux/store';
 import { HttpClient } from '@angular/common/http';
@@ -44,7 +44,7 @@ export class TravelAgendaService extends EntityService<
     private _transportationCategoryService: TransportationCategoryService,
     private _travelAgendaUISrv: TravelAgendaUIService,
     protected _store: NgRedux<IAppState>,
-    protected _config: StoreConfig
+    protected _config: StoreConfig,
   ) {
     super(
       _http,
@@ -54,7 +54,7 @@ export class TravelAgendaService extends EntityService<
       `travelAgendas`,
       _errorService,
       _travelAgendaUISrv,
-      _config
+      _config,
     );
   }
   //#endregion

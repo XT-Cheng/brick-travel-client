@@ -77,7 +77,7 @@ export class UserService extends EntityService<IUser, IUserBiz> {
           const jwt = new JWTTokenModel();
           jwt.token = res.token;
           this._tokenSrv.set(jwt);
-          const { id, name, nick, picture } = jwt.getPayload();
+          const { id, name, nick, picture } = jwt.payload;
           this.setCurrentUser({
             id,
             name,

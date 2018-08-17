@@ -13,7 +13,6 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DelonAuthConfig } from '@delon/auth';
@@ -25,17 +24,27 @@ import { DelonAuthConfig } from '@delon/auth';
 export class DefaultInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
-  get msg(): NzMessageService {
-    return this.injector.get(NzMessageService);
-  }
-
   private goTo(url: string) {
     setTimeout(() => this.injector.get(Router).navigateByUrl(url));
   }
 
-  private handleData(
-    event: HttpResponse<any> | HttpErrorResponse,
-  ): Observable<any> {
+  private handleError(error: HttpErrorResponse) {
+    switch (error.status) {
+      case 401: // 未登录状态码
+        this.goTo(this.injector.get(DelonAuthConfig).login_url);
+        break;
+      case 403:
+      case 404:
+      case 500:
+        this.goTo(`/${error.status}`);
+        break;
+      default:
+        // Do nothing
+        break;
+    }
+  }
+
+  private handleData(event: HttpResponse<any>): Observable<any> {
     // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
     this.injector.get(_HttpClient).end();
     // 业务处理：一些通用操作
@@ -49,33 +58,21 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           const body: any = event.body;
           if (body && body.status !== 0) {
-            this.msg.error(body.msg);
             // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
             // this.http.get('/').subscribe() 并不会触发
-            return throwError(body.msg);
+            return throwError(
+              new HttpErrorResponse({
+                error: body.msg,
+                status: 0,
+                statusText: body.msg,
+              }),
+            );
           } else {
             // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
             return of(
               new HttpResponse(Object.assign(event, { body: body.response })),
             );
           }
-        }
-        break;
-      case 401: // 未登录状态码
-        this.goTo(this.injector.get(DelonAuthConfig).login_url);
-        break;
-      case 403:
-      case 404:
-      case 500:
-        this.goTo(`/${event.status}`);
-        break;
-      default:
-        if (event instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持CORS或无效配置引起',
-            event,
-          );
-          this.msg.error(event.message);
         }
         break;
     }
@@ -106,8 +103,13 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
         if (event instanceof HttpResponse && event.status === 200)
           return this.handleData(event);
+
+        return of(event);
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err)),
+      catchError((err: HttpErrorResponse) => {
+        this.handleError(err);
+        return throwError(err);
+      }),
     );
   }
 }
