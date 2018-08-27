@@ -22,7 +22,6 @@ import { of, throwError } from 'rxjs';
 })
 export class UserLoginComponent implements OnDestroy {
   form: FormGroup;
-  error = '';
   type = 0;
   loading = false;
   count = 0;
@@ -79,7 +78,6 @@ export class UserLoginComponent implements OnDestroy {
   // #endregion
 
   submit() {
-    this.error = '';
     if (this.type === 0) {
       this.userName.markAsDirty();
       this.userName.updateValueAndValidity();
@@ -106,7 +104,6 @@ export class UserLoginComponent implements OnDestroy {
           }, this.REDIRECT_DELAY);
         },
         (err: HttpErrorResponse) => {
-          this.error = err.statusText;
           this.loading = false;
         },
       );

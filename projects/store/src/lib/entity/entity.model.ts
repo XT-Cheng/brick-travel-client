@@ -12,6 +12,7 @@ import {
   IViewPoint,
   IViewPointCategory,
 } from './model/viewPoint.model';
+import { IApplication } from './model/application.model';
 
 export enum EntityTypeEnum {
   CITY = 'CITY',
@@ -24,6 +25,7 @@ export enum EntityTypeEnum {
   VIEWPOINTCATEGORY = 'VIEWPOINTCATEGORY',
   TRANSPORTATIONCATEGORY = 'TRANSPORTATIONCATEGORY',
   MASTER_DATA = 'MASTER_DATA',
+  APPLICATION = 'APPLICATION',
 }
 
 export enum STORE_ENTITIES_KEY {
@@ -38,6 +40,7 @@ export enum STORE_ENTITIES_KEY {
   travelViewPoints = 'travelViewPoints',
   dailyTrips = 'dailyTrips',
   travelAgendas = 'travelAgendas',
+  application = 'application',
 }
 
 export interface IEntity {
@@ -56,6 +59,7 @@ export interface IEntities {
   travelViewPoints: { [id: string]: ITravelViewPoint };
   dailyTrips: { [id: string]: IDailyTrip };
   transportationCatgories: { [id: string]: ITransportationCategory };
+  application: { [id: string]: IApplication };
 }
 
 export const INIT_ENTITY_STATE: IEntities = {
@@ -70,6 +74,7 @@ export const INIT_ENTITY_STATE: IEntities = {
   travelViewPoints: {},
   dailyTrips: {},
   transportationCatgories: {},
+  application: {},
 };
 
 // {} |

@@ -7,6 +7,7 @@ import {
   citySchema,
   transportationCategorySchema,
   viewPointCategorySchema,
+  applicationSchema,
 } from '../entity/entity.schema';
 import { IAppState } from '../store.model';
 import { FetchService } from './fetch.service';
@@ -28,6 +29,7 @@ export class MasterDataService extends FetchService {
         viewPointCategories: [viewPointCategorySchema],
         transportationCategories: [transportationCategorySchema],
         cities: [citySchema],
+        applications: [applicationSchema],
       },
       `masterData`,
       _config,

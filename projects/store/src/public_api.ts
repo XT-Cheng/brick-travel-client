@@ -16,7 +16,9 @@ export * from './lib/store.model';
 export * from './lib/store.reducer';
 export * from './lib/store.epic';
 export * from './lib/store.action';
+export * from './lib/store.config';
 
 export * from './lib/providers/user.service';
 export * from './lib/providers/error.service';
 export * from './lib/providers/dataFlush.service';
+export * from './lib/providers/masterData.service';

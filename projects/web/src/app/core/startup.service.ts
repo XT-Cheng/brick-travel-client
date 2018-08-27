@@ -21,6 +21,7 @@ import {
   JWTTokenModel,
 } from '@delon/auth';
 import { UserService } from '@store';
+import { MasterDataService } from '@store';
 
 /**
  * 用于应用启动时
@@ -30,6 +31,7 @@ import { UserService } from '@store';
 export class StartupService {
   constructor(
     private _dataService: DataFlushService,
+    private _masterDataService: MasterDataService,
     private _store: NgRedux<IAppState>,
     private _rootEpics: RootEpics,
     private _authConfig: DelonAuthConfig,
@@ -55,6 +57,24 @@ export class StartupService {
 
     epicMiddleware.run(this._rootEpics.createEpics());
 
+    this.getToken();
+
+    this.getMasterData();
+
+    resolve(null);
+
+    // .then(() => this._storage.get(TokenStorage.TOKEN_KEY))
+    // .then(value => this._tokenService.setRaw(value))
+    // .then(_ => this._masterService.fetch())
+    // .then(_ => {
+    // });
+  }
+
+  private viaMock(resolve: any, reject: any) {
+    resolve({});
+  }
+
+  private getToken() {
     const jwt = new JWTTokenModel();
     jwt.token = this._storeSrv.get(this._authConfig.store_key).token;
 
@@ -68,18 +88,10 @@ export class StartupService {
       };
       this._userSrv.setCurrentUser(userBiz);
     }
-
-    resolve(null);
-
-    // .then(() => this._storage.get(TokenStorage.TOKEN_KEY))
-    // .then(value => this._tokenService.setRaw(value))
-    // .then(_ => this._masterService.fetch())
-    // .then(_ => {
-    // });
   }
 
-  private viaMock(resolve: any, reject: any) {
-    resolve({});
+  private getMasterData() {
+    this._masterDataService.fetch();
   }
 
   load(): Promise<any> {

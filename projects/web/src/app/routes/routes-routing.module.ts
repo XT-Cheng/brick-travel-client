@@ -6,11 +6,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutPassportComponent } from '../layouts/passport/passport.component';
 import { environment } from '@env/environment';
 import { UserLoginComponent } from './passport/login/login.component';
+import { RoutingGuard } from './route-guard';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
+    canActivate: [RoutingGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
@@ -58,6 +60,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
   exports: [],
-  providers: [],
+  providers: [RoutingGuard],
 })
 export class RouteRoutingModule {}

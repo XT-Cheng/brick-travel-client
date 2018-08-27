@@ -16,6 +16,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DelonAuthConfig } from '@delon/auth';
+import { NzMessageService } from 'ng-zorro-antd';
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
@@ -23,6 +24,10 @@ import { DelonAuthConfig } from '@delon/auth';
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
+
+  get msg(): NzMessageService {
+    return this.injector.get(NzMessageService);
+  }
 
   private goTo(url: string) {
     setTimeout(() => this.injector.get(Router).navigateByUrl(url));
@@ -58,6 +63,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           const body: any = event.body;
           if (body && body.status !== 0) {
+            this.msg.error(body.msg);
             // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
             // this.http.get('/').subscribe() 并不会触发
             return throwError(

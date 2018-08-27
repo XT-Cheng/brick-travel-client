@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -12,6 +12,20 @@ import { LayoutModule } from './layouts/layout.module';
 import { SharedModule } from '@shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@store';
+import { StartupService } from '@core/startup.service';
+import { StoreConfig } from '@store';
+
+export function storeConfig(): StoreConfig {
+  return Object.assign(new StoreConfig(), <StoreConfig>{
+    api_host: '',
+  });
+}
+
+export function StartupServiceFactory(
+  startupService: StartupService,
+): Function {
+  return () => startupService.load();
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +42,13 @@ import { StoreModule } from '@store';
     CoreModule,
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [StartupService],
+      multi: true,
+    },
+    { provide: StoreConfig, useFactory: storeConfig },
     { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

@@ -1,6 +1,10 @@
 import { schema } from 'normalizr';
 import { STORE_ENTITIES_KEY } from './entity.model';
 
+export const applicationSchema = new schema.Entity(
+  STORE_ENTITIES_KEY.application,
+);
+
 export const userSchema = new schema.Entity(STORE_ENTITIES_KEY.users);
 
 export const citySchema = new schema.Entity(STORE_ENTITIES_KEY.cities);
