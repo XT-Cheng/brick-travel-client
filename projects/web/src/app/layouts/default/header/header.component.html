@@ -1,7 +1,9 @@
 <div class="logo">
   <a [routerLink]="['/']">
-    <img class="expanded" src="./assets/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;" />
-    <img class="collapsed" src="./assets/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
+    <img class="expanded" src="./assets/logo-full.svg" alt="{{(appService.application$ | async).name}}" style="max-height:40px;"
+    />
+    <img class="collapsed" src="./assets/logo.svg" alt="{{(appService.application$ | async).name}}" style="max-height:30px;"
+    />
   </a>
 </div>
 <div class="top-nav-wrap">

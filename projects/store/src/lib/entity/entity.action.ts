@@ -96,6 +96,9 @@ export function getEntityKey(typeEnum: EntityTypeEnum): string {
     case EntityTypeEnum.TRANSPORTATIONCATEGORY: {
       return STORE_ENTITIES_KEY.transportationCatgories;
     }
+    case EntityTypeEnum.APPLICATION: {
+      return STORE_ENTITIES_KEY.application;
+    }
     default:
       throw new Error(`Unknown EntityType ${typeEnum}`);
   }
@@ -128,6 +131,9 @@ export function getUIKey(typeEnum: EntityTypeEnum): string {
       return '';
     }
     case EntityTypeEnum.TRANSPORTATIONCATEGORY: {
+      return '';
+    }
+    case EntityTypeEnum.APPLICATION: {
       return '';
     }
     default:

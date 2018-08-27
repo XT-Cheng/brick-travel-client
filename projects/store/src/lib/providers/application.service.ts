@@ -44,7 +44,17 @@ export class ApplicationService extends EntityService<
 
   //#region Public methods
   public get application$(): Observable<IApplicationBiz> {
-    return this.all$.pipe(map(apps => apps[0]));
+    return this.all$.pipe(
+      map(apps => {
+        if (apps.length > 0) return apps[0];
+
+        return {
+          id: '',
+          name: '',
+          version: '',
+        };
+      }),
+    );
   }
   //#endregion
 }
