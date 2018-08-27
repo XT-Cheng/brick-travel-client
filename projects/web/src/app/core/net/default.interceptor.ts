@@ -1,32 +1,36 @@
-import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
   HttpErrorResponse,
-  HttpSentEvent,
+  HttpHandler,
   HttpHeaderResponse,
+  HttpInterceptor,
   HttpProgressEvent,
+  HttpRequest,
   HttpResponse,
+  HttpSentEvent,
   HttpUserEvent,
 } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
-import { _HttpClient } from '@delon/theme';
-import { environment } from '@env/environment';
+import { Injectable, Injector } from '@angular/core';
+import { Router } from '@angular/router';
 import { DelonAuthConfig } from '@delon/auth';
+import { _HttpClient, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { environment } from '@env/environment';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
+  }
+
+  get translater(): AlainI18NService {
+    return this.injector.get(ALAIN_I18N_TOKEN);
   }
 
   private goTo(url: string) {
@@ -44,7 +48,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         this.goTo(`/${error.status}`);
         break;
       default:
-        // Do nothing
+        this.msg.error(this.translater.fanyi('home'));
         break;
     }
   }
@@ -89,11 +93,11 @@ export class DefaultInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
+  | HttpSentEvent
+  | HttpHeaderResponse
+  | HttpProgressEvent
+  | HttpResponse<any>
+  | HttpUserEvent<any>
   > {
     // 统一加上服务端前缀
     let url = req.url;

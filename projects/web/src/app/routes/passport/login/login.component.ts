@@ -1,19 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import {
-//   DA_SERVICE_TOKEN,
-//   DelonAuthConfig,
-//   ITokenModel,
-//   ITokenService,
-//   JWTTokenModel,
-// } from '@delon/auth';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { UserService } from '@store';
-import { catchError } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
-// import { UserService } from 'store';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'passport-login',
@@ -74,7 +63,7 @@ export class UserLoginComponent implements OnDestroy {
     }, 1000);
   }
 
-  forgetPassword() {}
+  forgetPassword() { }
   // #endregion
 
   submit() {
@@ -103,56 +92,10 @@ export class UserLoginComponent implements OnDestroy {
             return this._router.navigateByUrl('/');
           }, this.REDIRECT_DELAY);
         },
-        (err: HttpErrorResponse) => {
+        () => {
           this.loading = false;
         },
       );
-    // this.http
-    //   .post(this.authConfig.login_url, {
-    //     username: this.userName.value,
-    //     password: this.password.value,
-    //   })
-    //   .subscribe(
-    //     (res: any) => {
-    //       this.loading = false;
-    //       const jwt = new JWTTokenModel();
-    //       jwt.token = res.token;
-    //       this.tokenSrv.set(jwt);
-    //       const x = this.tokenSrv.get(JWTTokenModel);
-
-    //     },
-    //     (err: any) => {
-    //       this.error = err;
-    //     },
-    //   );
-
-    // setTimeout(() => {
-    //   this.loading = false;
-    //   if (this.type === 0) {
-    //     if (
-    //       this.userName.value !== 'admin' ||
-    //       this.password.value !== '888888'
-    //     ) {
-    //       this.error = `账户或密码错误`;
-    //       return;
-    //     }
-    //   }
-
-    //   // 清空路由复用信息
-    //   this.reuseTabService.clear();
-    //   // 设置Token信息
-    //   this.tokenService.set({
-    //     token: '123456789',
-    //     name: this.userName.value,
-    //     email: `cipchk@qq.com`,
-    //     id: 10000,
-    //     time: +new Date(),
-    //   });
-    //   // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-    //   // this.startupSrv.load().then(() => this.router.navigate(['/']));
-    //   // 否则直接跳转
-    //   this.router.navigate(['/']);
-    // }, 1000);
   }
 
   ngOnDestroy(): void {

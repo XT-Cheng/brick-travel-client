@@ -1,27 +1,12 @@
-import { Injectable, Inject } from '@angular/core';
-import { createEpicMiddleware } from 'redux-observable';
 import { NgRedux } from '@angular-redux/store';
-import {
-  DataFlushService,
-  IAppState,
-  rootReducer,
-  RootEpics,
-  INIT_APP_STATE,
-} from '@store';
+import { Inject, Injectable } from '@angular/core';
+import { DA_STORE_TOKEN, DelonAuthConfig, IStore, JWTTokenModel } from '@delon/auth';
+import { DataFlushService, IAppState, INIT_APP_STATE, MasterDataService, RootEpics, rootReducer, UserService } from '@store';
 import { deepExtend } from '@utilities';
-import * as Immutable from 'seamless-immutable';
 import { createLogger } from 'redux-logger';
+import { createEpicMiddleware } from 'redux-observable';
 import { stateTransformer } from 'redux-seamless-immutable';
-import {
-  DA_STORE_TOKEN,
-  IStore,
-  DelonAuthConfig,
-  DA_SERVICE_TOKEN,
-  TokenService,
-  JWTTokenModel,
-} from '@delon/auth';
-import { UserService } from '@store';
-import { MasterDataService } from '@store';
+import * as Immutable from 'seamless-immutable';
 
 /**
  * 用于应用启动时
@@ -37,8 +22,7 @@ export class StartupService {
     private _authConfig: DelonAuthConfig,
     private _userSrv: UserService,
     @Inject(DA_STORE_TOKEN) private _storeSrv: IStore,
-    @Inject(DA_SERVICE_TOKEN) private _tokenService: TokenService,
-  ) {}
+  ) { }
 
   private viaHttp(resolve: any, reject: any) {
     resolve({});
