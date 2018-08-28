@@ -1,4 +1,8 @@
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +29,7 @@ export function storeConfig(): StoreConfig {
 
 // 加载i18n语言文件
 export function I18nHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
+  return new TranslateHttpLoader(http, `/assets/i18n/`, '.json');
 }
 
 export function StartupServiceFactory(
@@ -46,7 +50,7 @@ export function StartupServiceFactory(
         provide: TranslateLoader,
         useFactory: I18nHttpLoaderFactory,
         deps: [HttpClient],
-      }
+      },
     }),
     StoreModule.forRoot(),
     RoutesModule,
@@ -68,4 +72,4 @@ export function StartupServiceFactory(
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

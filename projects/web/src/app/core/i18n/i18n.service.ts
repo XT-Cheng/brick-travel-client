@@ -14,7 +14,7 @@ export class I18NService implements AlainI18NService {
 
   private _langs = [
     { code: 'en', text: 'English' },
-    { code: 'zh', text: '中文' },
+    { code: 'zh-CN', text: '中文' },
   ];
 
   constructor(

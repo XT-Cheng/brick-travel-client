@@ -23,7 +23,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {}
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -93,16 +93,19 @@ export class DefaultInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<
-  | HttpSentEvent
-  | HttpHeaderResponse
-  | HttpProgressEvent
-  | HttpResponse<any>
-  | HttpUserEvent<any>
+    | HttpSentEvent
+    | HttpHeaderResponse
+    | HttpProgressEvent
+    | HttpResponse<any>
+    | HttpUserEvent<any>
   > {
     // 统一加上服务端前缀
     let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
+
+    if (!url.endsWith('.json')) {
+      if (!url.startsWith('https://') && !url.startsWith('http://')) {
+        url = environment.SERVER_URL + url;
+      }
     }
 
     const newReq = req.clone({
@@ -111,7 +114,11 @@ export class DefaultInterceptor implements HttpInterceptor {
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
-        if (event instanceof HttpResponse && event.status === 200)
+        if (
+          event instanceof HttpResponse &&
+          event.status === 200 &&
+          event.url.startsWith(environment.SERVER_URL)
+        )
           return this.handleData(event);
 
         return of(event);

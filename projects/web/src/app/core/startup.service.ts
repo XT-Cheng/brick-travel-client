@@ -1,12 +1,26 @@
 import { NgRedux } from '@angular-redux/store';
 import { Inject, Injectable } from '@angular/core';
-import { DA_STORE_TOKEN, DelonAuthConfig, IStore, JWTTokenModel } from '@delon/auth';
-import { DataFlushService, IAppState, INIT_APP_STATE, MasterDataService, RootEpics, rootReducer, UserService } from '@store';
+import {
+  DA_STORE_TOKEN,
+  DelonAuthConfig,
+  IStore,
+  JWTTokenModel,
+} from '@delon/auth';
+import {
+  DataFlushService,
+  IAppState,
+  INIT_APP_STATE,
+  MasterDataService,
+  RootEpics,
+  rootReducer,
+  UserService,
+} from '@store';
 import { deepExtend } from '@utilities';
 import { createLogger } from 'redux-logger';
 import { createEpicMiddleware } from 'redux-observable';
 import { stateTransformer } from 'redux-seamless-immutable';
 import * as Immutable from 'seamless-immutable';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 
 /**
  * 用于应用启动时
@@ -21,8 +35,9 @@ export class StartupService {
     private _rootEpics: RootEpics,
     private _authConfig: DelonAuthConfig,
     private _userSrv: UserService,
+    @Inject(ALAIN_I18N_TOKEN) private _i18n: AlainI18NService,
     @Inject(DA_STORE_TOKEN) private _storeSrv: IStore,
-  ) { }
+  ) {}
 
   private viaHttp(resolve: any, reject: any) {
     resolve({});
@@ -44,6 +59,8 @@ export class StartupService {
     this.getToken();
 
     this.getMasterData();
+
+    this._i18n.use('zh-CN');
 
     resolve(null);
 
