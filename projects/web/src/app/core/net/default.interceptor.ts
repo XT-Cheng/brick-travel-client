@@ -48,7 +48,11 @@ export class DefaultInterceptor implements HttpInterceptor {
         this.goTo(`/${error.status}`);
         break;
       default:
-        this.msg.error(this.translater.fanyi('home'));
+        this.msg.error(
+          this.translater.fanyi(
+            error.error instanceof ProgressEvent ? error.message : error.error,
+          ),
+        );
         break;
     }
   }
@@ -67,7 +71,6 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           const body: any = event.body;
           if (body && body.status !== 0) {
-            this.msg.error(body.msg);
             // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
             // this.http.get('/').subscribe() 并不会触发
             return throwError(

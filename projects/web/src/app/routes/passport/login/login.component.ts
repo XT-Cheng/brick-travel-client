@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@store';
@@ -16,6 +16,8 @@ export class UserLoginComponent implements OnDestroy {
   count = 0;
   interval$: any;
   readonly REDIRECT_DELAY = 1000;
+  @ViewChild('password')
+  passwordCtl: ElementRef;
 
   constructor(
     fb: FormBuilder,
@@ -49,6 +51,14 @@ export class UserLoginComponent implements OnDestroy {
 
   //#endregion
 
+  onUserNameEntered() {
+    this.passwordCtl.nativeElement.focus();
+  }
+
+  onPasswordEntered() {
+    this.submit();
+  }
+
   switch(ret: any) {
     this.type = ret.index;
   }
@@ -63,7 +73,7 @@ export class UserLoginComponent implements OnDestroy {
     }, 1000);
   }
 
-  forgetPassword() { }
+  forgetPassword() {}
   // #endregion
 
   submit() {
@@ -87,7 +97,6 @@ export class UserLoginComponent implements OnDestroy {
       .authenticate(this.userName.value, this.password.value)
       .subscribe(
         () => {
-          this.loading = false;
           setTimeout(() => {
             return this._router.navigateByUrl('/');
           }, this.REDIRECT_DELAY);
