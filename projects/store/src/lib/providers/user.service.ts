@@ -17,7 +17,10 @@ import {
 import { userSchema } from '../entity/entity.schema';
 import { IUser } from '../entity/model/user.model';
 import { IAppState, STORE_KEY } from '../store.model';
-import { userLoggedInAction } from '../ui/reducer/user.reducer';
+import {
+  userLoggedInAction,
+  userLoggedOutAction,
+} from '../ui/reducer/user.reducer';
 import { STORE_UI_KEY } from '../ui/ui.model';
 import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
@@ -66,6 +69,11 @@ export class UserService extends EntityService<IUser, IUserBiz> {
   //#endregion
 
   //#region Public methods
+  public logout() {
+    this.setCurrentUser(null);
+    this._tokenSrv.clear();
+  }
+
   public authenticate(userName: string, password: string) {
     return this._http
       .post(this._authConfig.login_url, {
@@ -105,6 +113,11 @@ export class UserService extends EntityService<IUser, IUserBiz> {
   }
 
   public setCurrentUser(u: IUserBiz) {
+    if (!u) {
+      this._store.dispatch(userLoggedOutAction());
+      return;
+    }
+
     this._store.dispatch(
       this.succeededAction(
         EntityActionTypeEnum.LOAD,

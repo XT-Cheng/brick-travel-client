@@ -28,6 +28,7 @@ export type UIUserAction = FluxStandardAction<
 
 enum UIUserActionTypeEnum {
   USER_LOGGED_IN = 'UI:USER:USER_LOGGED_IN',
+  USER_LOGGED_OUT = 'UI:USER:USER_LOGGED_OUT',
 }
 
 export function userLoggedInAction(u: IUserBiz): UIUserAction {
@@ -40,12 +41,23 @@ export function userLoggedInAction(u: IUserBiz): UIUserAction {
   };
 }
 
+export function userLoggedOutAction(): UIUserAction {
+  return {
+    type: UIUserActionTypeEnum.USER_LOGGED_OUT,
+    meta: { progressing: false },
+    payload: <any>Object.assign({}, defaultUIUserActionPayload, {
+      [STORE_UI_USER_KEY.userLoggedIn]: '',
+    }),
+  };
+}
+
 export function userReducer(
   state = INIT_UI_USER_STATE,
   action: UIUserAction,
 ): IUserUI {
   switch (action.type) {
-    case UIUserActionTypeEnum.USER_LOGGED_IN: {
+    case UIUserActionTypeEnum.USER_LOGGED_IN:
+    case UIUserActionTypeEnum.USER_LOGGED_OUT: {
       return Immutable(state).set(
         STORE_UI_USER_KEY.userLoggedIn,
         action.payload[STORE_UI_USER_KEY.userLoggedIn],

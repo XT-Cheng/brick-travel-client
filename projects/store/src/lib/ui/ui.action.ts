@@ -42,7 +42,9 @@ export function entitySearchAction(entityType: EntityTypeEnum) {
     }),
   });
 }
+//#endregion
 
+//#region Select Actions
 export function entitySelectAction(entityType: EntityTypeEnum) {
   return (selectedId: string) => ({
     type: UIActionTypeEnum.SELECT,
@@ -53,7 +55,9 @@ export function entitySelectAction(entityType: EntityTypeEnum) {
     }),
   });
 }
+//#endregion
 
+//#region Filter Actions
 export function entityFilterAction(entityType: EntityTypeEnum) {
   return (selectedCriteriaId: string, unSelectedCriteriaIds: string[]) => ({
     type: UIActionTypeEnum.FILTER,
@@ -67,3 +71,4 @@ export function entityFilterAction(entityType: EntityTypeEnum) {
     }),
   });
 }
+//#endregion

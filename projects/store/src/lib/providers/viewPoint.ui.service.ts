@@ -11,12 +11,18 @@ import { UIService } from './ui.service';
 
 @Injectable()
 export class ViewPointUIService extends UIService<IViewPoint, IViewPointBiz> {
+  //#region Constructor
 
-    //#region Constructor
-
-    constructor(protected _store: NgRedux<IAppState>, protected _filterCategoryService: FilterCategoryService) {
-        super(_store, EntityTypeEnum.VIEWPOINT, STORE_UI_KEY.viewPoint, _filterCategoryService);
-    }
-    //#endregion
-
+  constructor(
+    protected _store: NgRedux<IAppState>,
+    protected _filterCategoryService: FilterCategoryService,
+  ) {
+    super(
+      _store,
+      EntityTypeEnum.VIEWPOINT,
+      STORE_UI_KEY.viewPoint,
+      _filterCategoryService,
+    );
+  }
+  //#endregion
 }

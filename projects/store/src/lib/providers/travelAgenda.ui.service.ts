@@ -10,14 +10,23 @@ import { FilterCategoryService } from './filterCategory.service';
 import { UIService } from './ui.service';
 
 @Injectable()
-export class TravelAgendaUIService extends UIService<ITravelAgenda, ITravelAgendaBiz> {
+export class TravelAgendaUIService extends UIService<
+  ITravelAgenda,
+  ITravelAgendaBiz
+> {
+  //#region Constructor
 
-    //#region Constructor
+  constructor(
+    protected _store: NgRedux<IAppState>,
+    protected _filterCategoryService: FilterCategoryService,
+  ) {
+    super(
+      _store,
+      EntityTypeEnum.TRAVELAGENDA,
+      STORE_UI_KEY.travelAgenda,
+      _filterCategoryService,
+    );
+  }
 
-    constructor(protected _store: NgRedux<IAppState>, protected _filterCategoryService: FilterCategoryService) {
-        super(_store, EntityTypeEnum.TRAVELAGENDA, STORE_UI_KEY.travelAgenda, _filterCategoryService);
-    }
-
-    //#endregion
-
+  //#endregion
 }

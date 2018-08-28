@@ -23,3 +23,4 @@ export * from './lib/providers/error.service';
 export * from './lib/providers/dataFlush.service';
 export * from './lib/providers/masterData.service';
 export * from './lib/providers/application.service';
+export * from './lib/providers/layout.service';

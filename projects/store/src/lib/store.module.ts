@@ -26,6 +26,7 @@ import { ViewPointUIService } from './providers/viewPoint.ui.service';
 import { SearchService } from './providers/search.service';
 import { ApplicationService } from './providers/application.service';
 import { ErrorInterceptorService } from './error.interceptor.service';
+import { LayoutService } from './providers/layout.service';
 
 const PROVIDERS = [
   ErrorService,
@@ -44,6 +45,7 @@ const PROVIDERS = [
   ViewPointUIService,
   DataFlushService,
   SearchService,
+  LayoutService,
   StoreConfig,
   ApplicationService,
   {

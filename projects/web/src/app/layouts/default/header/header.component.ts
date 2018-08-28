@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApplicationService } from '@store';
+import { ApplicationService, LayoutService } from '@store';
 import { SettingsService } from '@delon/theme';
 
 @Component({
@@ -11,11 +11,13 @@ export class HeaderComponent {
 
   constructor(
     public appService: ApplicationService,
-    public settings: SettingsService,
+    public layoutService: LayoutService,
   ) {}
 
   toggleCollapsedSideabar() {
-    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+    this.layoutService.setSidebarCollapsed(
+      !this.layoutService.sidebarCollapsed,
+    );
   }
 
   searchToggleChange() {
