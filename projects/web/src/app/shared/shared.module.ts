@@ -7,11 +7,12 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
 import { TranslateModule } from '@ngx-translate/core';
 import { AutofocusDirective } from './directives/autofocus.directive';
-import { SidebarNavComponent } from './components/sidebar-nav.component';
+import { SidebarNavComponent } from '@shared/components/sidebar/sidebar-nav.component';
+import { ModalComponent } from '@shared/components/modal/modal.component';
 
 const THIRDMODULES = [NgZorroAntdModule, TranslateModule];
 
-const COMPONENTS = [SidebarNavComponent];
+const COMPONENTS = [SidebarNavComponent, ModalComponent];
 const DIRECTIVES = [AutofocusDirective];
 
 @NgModule({
