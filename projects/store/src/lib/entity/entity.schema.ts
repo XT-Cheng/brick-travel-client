@@ -1,8 +1,15 @@
 import { schema } from 'normalizr';
 import { STORE_ENTITIES_KEY } from './entity.model';
 
+export const applicationMenuSchema = new schema.Entity(
+  STORE_ENTITIES_KEY.applicationMenu,
+);
+
 export const applicationSchema = new schema.Entity(
   STORE_ENTITIES_KEY.application,
+  {
+    menus: [applicationMenuSchema],
+  },
 );
 
 export const userSchema = new schema.Entity(STORE_ENTITIES_KEY.users);

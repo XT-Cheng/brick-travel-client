@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ApplicationService, LayoutService } from '@store';
-import { SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'layout-header',

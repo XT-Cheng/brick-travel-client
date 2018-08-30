@@ -14,13 +14,19 @@ import {
   RootEpics,
   rootReducer,
   UserService,
+  ApplicationService,
 } from '@store';
 import { deepExtend } from '@utilities';
 import { createLogger } from 'redux-logger';
 import { createEpicMiddleware } from 'redux-observable';
 import { stateTransformer } from 'redux-seamless-immutable';
 import * as Immutable from 'seamless-immutable';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import {
+  AlainI18NService,
+  ALAIN_I18N_TOKEN,
+  MenuService,
+  Menu,
+} from '@delon/theme';
 
 /**
  * 用于应用启动时
@@ -29,6 +35,8 @@ import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 @Injectable({ providedIn: 'root' })
 export class StartupService {
   constructor(
+    private _menuService: MenuService,
+    private _applicationService: ApplicationService,
     private _dataService: DataFlushService,
     private _masterDataService: MasterDataService,
     private _store: NgRedux<IAppState>,
@@ -61,6 +69,25 @@ export class StartupService {
     this.getMasterData();
 
     this._i18n.use('zh-CN');
+
+    this._applicationService.application$.subscribe(app => {
+      const mainNavMenuItem = {
+        text: 'Main',
+        group: true,
+        icon: 'icon-speedometer',
+        children: [],
+      };
+      mainNavMenuItem.children = app.menus.map(
+        menu =>
+          <Menu>{
+            text: menu.name,
+            icon: menu.icon,
+            link: menu.link,
+            linkExact: true,
+          },
+      );
+      this._menuService.add([mainNavMenuItem]);
+    });
 
     resolve(null);
 

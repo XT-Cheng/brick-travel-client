@@ -9,7 +9,7 @@ import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
 import { StoreConfig } from '../store.config';
 import { IApplication } from '../entity/model/application.model';
-import { IApplicationBiz } from '../bizModel/model/app.biz.model';
+import { IApplicationBiz } from '../bizModel/model/application.biz.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -52,6 +52,7 @@ export class ApplicationService extends EntityService<
           id: '',
           name: '',
           version: '',
+          menus: [],
         };
       }),
     );

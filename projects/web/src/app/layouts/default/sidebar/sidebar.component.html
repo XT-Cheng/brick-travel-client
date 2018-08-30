@@ -1,10 +1,10 @@
 <div class="aside-inner">
   <nz-dropdown nzTrigger="click" class="user-block clearfix">
     <div nz-dropdown class="user-block-dropdown">
-      <nz-avatar class="avatar" [nzIcon]="'user'"></nz-avatar>
+      <nz-avatar class="avatar" [nzSrc]='(userService.loggedIn$ | async).picture' [nzIcon]="'user'"></nz-avatar>
       <div class="info">
-        <strong>{{settings.user.name}}</strong>
-        <p class="text-truncate mb0">{{settings.user.email}}</p>
+        <strong>{{(userService.loggedIn$ | async).name}}</strong>
+        <p class="text-truncate mb0">{{(userService.loggedIn$ | async).name}}</p>
       </div>
     </div>
     <ul nz-menu>
@@ -13,5 +13,5 @@
       <li nz-menu-item (click)="msgSrv.success('logout')">登出</li>
     </ul>
   </nz-dropdown>
-  <sidebar-nav class="d-block py-lg"></sidebar-nav>
+  <layout-sidebar-nav class="d-block py-lg"></layout-sidebar-nav>
 </div>

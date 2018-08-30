@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AlainI18NService, SettingsService } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
 import * as df_en from 'date-fns/locale/en';
 import * as df_zh_cn from 'date-fns/locale/zh_cn';
 import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AlainI18NService } from '@delon/theme';
 
 @Injectable()
 export class I18NService implements AlainI18NService {
@@ -18,11 +18,10 @@ export class I18NService implements AlainI18NService {
   ];
 
   constructor(
-    settings: SettingsService,
     private nzI18nService: NzI18nService,
     private translate: TranslateService,
   ) {
-    const defaultLan = settings.layout.lang || translate.getBrowserLang();
+    const defaultLan = translate.getBrowserLang();
     const lans = this._langs.map(item => item.code);
     this._default = lans.includes(defaultLan) ? defaultLan : lans[0];
     translate.addLangs(lans);

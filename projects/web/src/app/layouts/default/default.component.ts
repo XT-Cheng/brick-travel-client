@@ -6,7 +6,7 @@ import {
   NavigationError,
 } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ScrollService, MenuService, SettingsService } from '@delon/theme';
+import { ScrollService, MenuService } from '@delon/theme';
 
 @Component({
   selector: 'layout-default',
@@ -20,7 +20,6 @@ export class LayoutDefaultComponent {
     scroll: ScrollService,
     private _message: NzMessageService,
     public menuSrv: MenuService,
-    public settings: SettingsService,
   ) {
     // scroll to top in change page
     router.events.subscribe(evt => {
@@ -29,7 +28,7 @@ export class LayoutDefaultComponent {
       }
       if (evt instanceof NavigationError) {
         this.isFetching = false;
-        _message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+        this._message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
         return;
       }
       if (!(evt instanceof NavigationEnd)) {

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SettingsService } from '@delon/theme';
+import { UserService } from '@store';
 
 @Component({
-  selector   : 'layout-sidebar',
-  templateUrl: './sidebar.component.html'
+  selector: 'layout-sidebar',
+  templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-  constructor(public settings: SettingsService, public msgSrv: NzMessageService) {
-  }
+  constructor(
+    public userService: UserService,
+    public msgSrv: NzMessageService,
+  ) {}
 }

@@ -11,6 +11,7 @@ export * from './lib/bizModel/model/filterCategory.biz.model';
 export * from './lib/bizModel/model/travelAgenda.biz.model';
 export * from './lib/bizModel/model/user.biz.model';
 export * from './lib/bizModel/model/viewPoint.biz.model';
+export * from './lib/bizModel/model/application.biz.model';
 
 export * from './lib/store.model';
 export * from './lib/store.reducer';
