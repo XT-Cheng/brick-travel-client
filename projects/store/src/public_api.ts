@@ -32,3 +32,5 @@ export * from './lib/providers/layout.service';
 export * from './lib/providers/city.service';
 export * from './lib/providers/city.ui.service';
 export * from './lib/providers/search.service';
+export * from './lib/providers/entity.service';
+export * from './lib/providers/ui.service';
