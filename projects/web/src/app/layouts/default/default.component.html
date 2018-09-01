@@ -4,6 +4,11 @@
   <layout-sidebar class="aside"></layout-sidebar>
   <section class="content">
     <reuse-tab></reuse-tab>
-    <router-outlet></router-outlet>
+    <layout-quick-menu>
+      <button nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()' nzSize="large" nzShape="circle">
+        <i class="anticon anticon-plus"></i>
+      </button>
+    </layout-quick-menu>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
   </section>
 </div>

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { environment } from '@env/environment';
 
 import { LayoutDefaultComponent } from '../layouts/default/default.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutPassportComponent } from '../layouts/passport/passport.component';
-import { environment } from '@env/environment';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserLoginComponent } from './passport/login/login.component';
 import { RoutingGuard } from './route-guard';
 
@@ -24,7 +24,7 @@ const routes: Routes = [
         },
       },
       // 业务子模块
-      // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
+      { path: 'cities', loadChildren: './features/city/city.module#CityModule' }
     ],
   },
   // passport
@@ -62,4 +62,4 @@ const routes: Routes = [
   exports: [],
   providers: [RoutingGuard],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }

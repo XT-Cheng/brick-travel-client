@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
+import { AlainThemeModule } from '@delon/theme';
 import { TranslateModule } from '@ngx-translate/core';
-import { AutofocusDirective } from './directives/autofocus.directive';
-import { SidebarNavComponent } from '@shared/components/sidebar/sidebar-nav.component';
 import { ModalComponent } from '@shared/components/modal/modal.component';
+import { QuickMenuComponent } from '@shared/components/quick-menu.component';
+import { SidebarNavComponent } from '@shared/components/sidebar/sidebar-nav.component';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+
+import { AutofocusDirective } from './directives/autofocus.directive';
 
 const THIRDMODULES = [NgZorroAntdModule, TranslateModule];
 
-const COMPONENTS = [SidebarNavComponent, ModalComponent];
+const COMPONENTS = [SidebarNavComponent, ModalComponent, QuickMenuComponent];
 const DIRECTIVES = [AutofocusDirective];
 
 @NgModule({
@@ -45,4 +47,4 @@ const DIRECTIVES = [AutofocusDirective];
     ...DIRECTIVES,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
