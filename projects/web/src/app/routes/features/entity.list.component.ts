@@ -1,25 +1,13 @@
-import { OnDestroy, OnInit } from '@angular/core';
+import { OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ModalComponent } from '@shared/components/modal/modal.component';
+import { EntityService, ErrorService, IBiz, IEntity, SearchService, UIService } from '@store';
 import { NzMessageService, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import {
-  ComponentType,
-  EntityFormComponent,
-  EntityFormMode,
-} from './entity.form.component';
-import {
-  IEntity,
-  IBiz,
-  UIService,
-  ErrorService,
-  SearchService,
-  EntityService,
-} from '@store';
 import { LayoutDefaultComponent } from '../../layouts/default/default.component';
-import { ModalComponent } from '@shared/components/modal/modal.component';
+import { ComponentType, EntityFormComponent, EntityFormMode } from './entity.form.component';
 
 export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   implements ComponentType, OnInit, OnDestroy {
@@ -30,6 +18,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   //#endregion
 
   //#region Private members
+  private _scrollBarWidth: number;
   private _layoutCmp: LayoutDefaultComponent;
 
   private _modelRef: NzModalRef;
@@ -113,6 +102,8 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
     protected _messageService: NzMessageService,
     protected _searchService: SearchService,
     protected _service: EntityService<T, U>,
+    protected _document: any,
+    protected _renderer: Renderer2,
   ) {
     this._service.fetch();
     this._searchService
@@ -158,6 +149,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   }
 
   createEntity() {
+    this._scrollBarWidth = this.scrollBarWidth();
     this._modelRef = this._modalService.create({
       nzTitle: `Create ${this.entityDescription}`,
       nzContent: this.componentType,
@@ -171,6 +163,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
         this._cancelBtnOption,
       ],
     });
+
+    this._modelRef.afterOpen.subscribe(() => {
+      // this.changeBodyOverflow();
+    })
   }
 
   //#endregion
@@ -180,6 +176,21 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   //#endregion
 
   //#region Private methods
+  private hasBodyScrollBar(): boolean {
+    return window.document.body.scrollHeight > (window.innerHeight || window.document.documentElement.clientHeight);
+  }
+
+  private scrollBarWidth(): number {
+    return window.innerWidth - window.document.documentElement.clientWidth;
+  }
+
+  private changeBodyOverflow(): void {
+    if (this.hasBodyScrollBar()) { // Adding padding-right only when body's scrollbar is able to shown up
+      this._renderer.setStyle(this._document.body, 'padding-right', `${this._scrollBarWidth}px`);
+      this._renderer.setStyle(this._document.body, 'overflow', 'hidden');
+    }
+  }
+
   private _onReuseInit() {
     this._layoutCmp.entityListComp = this;
   }
@@ -243,10 +254,12 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   }
 
   protected edit(entity: U) {
+    this._scrollBarWidth = this.scrollBarWidth();
     this.editEntity(entity, entity[this.entityName]);
   }
 
   protected delete(entity: U) {
+    this._scrollBarWidth = this.scrollBarWidth();
     this.deleteEntity(entity, entity[this.entityName]);
   }
 

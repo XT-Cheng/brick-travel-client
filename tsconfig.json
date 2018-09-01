@@ -16,7 +16,6 @@
       "es2017",
       "dom"
     ],
-    "types": [],
     "paths": {
       "@core": [
         "projects/web/src/app/core"

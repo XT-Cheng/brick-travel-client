@@ -1,14 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  ICityBiz,
-  newCity,
-  ICity,
-  CityService,
-  CityUIService,
-  SearchService,
-  ErrorService,
-} from '@store';
+import { CityService, CityUIService, ErrorService, ICity, ICityBiz, newCity, SearchService } from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 import { EntityListComponent } from '../../../entity.list.component';
@@ -34,6 +27,8 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
     protected _modalService: NzModalService,
     public _cityService: CityService,
     protected _messageService: NzMessageService,
+    @Inject(DOCUMENT) protected _document: any,
+    protected _renderer: Renderer2,
   ) {
     super(
       _route,
@@ -43,6 +38,8 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
       _messageService,
       _searchService,
       _cityService,
+      _document,
+      _renderer
     );
   }
   //#endregion
