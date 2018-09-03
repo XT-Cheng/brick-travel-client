@@ -1,0 +1,151 @@
+<!-- <nb-card>
+  <nb-card-header>
+    {{title}}
+  </nb-card-header>
+  <nb-card-body>
+    <form #form="ngForm" class='vp-form' autocomplete="nope">
+      <nb-tabset>           
+        <nb-tab tabTitle='Others'>
+          <div class="form-group">
+            <label for="input-tips">Tips</label>
+            <textarea style='resize: none;' #tips='ngModel' type="text" id='input-tips' placeholder="Tips" class="form-control" [(ngModel)]="newEntity.tips"
+              name='tips'>
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="input-description">Description</label>
+            <textarea style='height: 180px;resize: none;' #description='ngModel' placeholder="Description" type="text" id='input-description'
+              class="form-control" [(ngModel)]="newEntity.description" name='description'>
+            </textarea>
+          </div>
+        </nb-tab>
+      </nb-tabset>
+      <button (click)='action()' type="button" [disabled]="isSubmitDisAllowed(form)" class="btn btn-primary">Submit</button>
+      <button (click)='close()' type="button" class="btn btn-danger">Close</button>
+    </form>
+
+  </nb-card-body>
+</nb-card> -->
+<form #form="ngForm" nz-form>
+  <nz-tabset>
+    <nz-tab nzTitle="General">
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Name</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isRequiredInValid(name)?'error':'success'" [nzSpan]="19">
+          <input nz-input btAutofocus required [(ngModel)]="newEntity.name" name="name" #name='ngModel'>
+          <nz-form-explain *ngIf="isRequiredInValid(name)"> Name is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Category</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isRequiredInValid(category)?'error':'success'" [nzSpan]="19">
+          <nz-select #category='ngModel' required [(ngModel)]='newEntity.category' [compareWith]="compareEntityFn" name='category'>
+            <nz-option *ngFor="let category of (_viewPointCategoryService.all$ | async)" [nzLabel]="category.name" [nzValue]="category"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="isRequiredInValid(category)"> Category is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Rank</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isNumberInValid(rank)?'error':'success'" [nzSpan]="19">
+          <nz-rate #rank='ngModel' required [(ngModel)]='newEntity.rank' name='rank'>
+          </nz-rate>
+          <nz-form-explain *ngIf="isNumberInValid(rank)"> Rank is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Time</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isNumberInValid(timeNeeded)?'error':'success'" [nzSpan]="19">
+          <nz-input-number required [nzAutoFocus]='true' [nzStep]="0.1" [nzPlaceHolder]='"Time"' #timeNeeded='ngModel' required [(ngModel)]='newEntity.timeNeeded'
+            name='timeNeeded'>
+          </nz-input-number>
+          <nz-form-explain *ngIf="isNumberInValid(timeNeeded)"> Time Needed is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle="Location">
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">City</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isCityInValid(city)?'error':'success'" [nzSpan]="19">
+          <nz-select #city='ngModel' required [(ngModel)]='newEntity.city' [compareWith]="compareEntityFn" name='city'>
+            <ng-container *ngIf='newEntity.city === null'>
+              <nz-option *ngFor="let city of (_cityService.all$ | async)" [nzLabel]="city.name" [nzValue]="city"></nz-option>
+            </ng-container>
+            <ng-container *ngIf='newEntity.city !== null'>
+              <nz-option [nzLabel]="newEntity.city.name" [nzValue]="newEntity.city"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="isCityInValid(city)"> City is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Address</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isRequiredInValid(address)?'error':'success'" [nzSpan]="19">
+          <input nz-input required [(ngModel)]="newEntity.address" name="address" #address='ngModel'>
+          <nz-form-explain *ngIf="isRequiredInValid(address)"> Address is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Latitude</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isRequiredInValid(latitude)?'error':'success'" [nzSpan]="19">
+          <input nz-input required disabled [(ngModel)]="newEntity.latitude" name="latitude" #latitude='ngModel'>
+          <nz-form-explain *ngIf="isRequiredInValid(latitude)"> Latitude is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Longtitude</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isRequiredInValid(longtitude)?'error':'success'" [nzSpan]="19">
+          <input nz-input required disabled [(ngModel)]="newEntity.longtitude" name="longtitude" #longtitude='ngModel'>
+          <nz-form-explain *ngIf="isRequiredInValid(longtitude)"> Longtitude is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item style="margin-bottom: 0px;">
+        <nz-form-control [nzOffset]='5'>
+          <button nz-button (click)='openMap()' [disabled]='!hasCity()'>
+            <i class="anticon anticon-environment"></i>
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle='Images'>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Thumbnail</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isThumbnailInValid()?'error':'success'" [nzSpan]="19">
+          <nz-upload nzAction="uploadUrl" nzListType="picture-card" [nzFileList]="thumbnailFileList" [nzShowButton]="thumbnailFileList.length < 1"
+            [nzBeforeUpload]="beforeThumbnailUpload" [nzShowUploadList]='{showRemoveIcon: true}' [nzRemove]="beforeThumbnailRemove">
+            <i class="anticon anticon-plus"></i>
+            <div class="ant-upload-text">Upload</div>
+          </nz-upload>
+          <nz-form-explain *ngIf="isThumbnailInValid()"> Thumbnail is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="5">Images</nz-form-label>
+        <nz-form-control [nzValidateStatus]="isImageInValid()?'error':'success'" [nzSpan]="19">
+          <nz-upload nzAction="uploadUrl" nzListType="picture-card" [nzFileList]="imagesFileList" [nzShowButton]="imagesFileList.length < 3"
+            [nzBeforeUpload]="beforeImagesUpload" [nzShowUploadList]='{showRemoveIcon: true}' [nzRemove]="beforeImagesRemove">
+            <i class="anticon anticon-plus"></i>
+            <div class="ant-upload-text">Upload</div>
+          </nz-upload>
+          <nz-form-explain *ngIf="isImageInValid()"> Image is required! </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle='Others'>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Tips</nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <textarea nz-input [(ngModel)]="newEntity.tips" name="tips" placeholder="Tips" [nzAutosize]="{ minRows: 2, maxRows: 6 }">
+          </textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Description</nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <textarea nz-input [(ngModel)]="newEntity.description" name="description" placeholder="Description" [nzAutosize]="{ minRows: 4, maxRows: 6 }">
+          </textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+  </nz-tabset>
+</form>

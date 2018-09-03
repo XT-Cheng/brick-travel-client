@@ -16,6 +16,7 @@ export * from './lib/bizModel/model/application.biz.model';
 export * from './lib/entity/entity.model';
 
 export * from './lib/entity/model/city.model';
+export * from './lib/entity/model/viewPoint.model';
 
 export * from './lib/store.model';
 export * from './lib/store.reducer';
@@ -34,3 +35,6 @@ export * from './lib/providers/city.ui.service';
 export * from './lib/providers/search.service';
 export * from './lib/providers/entity.service';
 export * from './lib/providers/ui.service';
+export * from './lib/providers/viewPoint.ui.service';
+export * from './lib/providers/viewPoint.service';
+export * from './lib/providers/viewPointCategory.service';

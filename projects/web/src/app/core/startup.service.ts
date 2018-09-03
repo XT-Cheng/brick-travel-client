@@ -15,6 +15,7 @@ import {
   rootReducer,
   UserService,
   ApplicationService,
+  CityService,
 } from '@store';
 import { deepExtend } from '@utilities';
 import { createLogger } from 'redux-logger';
@@ -38,6 +39,7 @@ export class StartupService {
     private _menuService: MenuService,
     private _applicationService: ApplicationService,
     private _dataService: DataFlushService,
+    private _cityService: CityService,
     private _masterDataService: MasterDataService,
     private _store: NgRedux<IAppState>,
     private _rootEpics: RootEpics,
@@ -88,6 +90,17 @@ export class StartupService {
       );
       this._menuService.add([mainNavMenuItem]);
     });
+
+    // this._cityService.all$.subscribe(cities => {
+    //   cities.forEach((city) => {
+    //     this.viewPointMenuItem.children.push({
+    //       text: city.name,
+    //       link: `/viewPoint/${city.id}`,
+    //       icon: 'icon-speedometer'
+    //     });
+    //   });
+    //   this._menuService.add([this.mainNavMenuItem]);
+    // });
 
     resolve(null);
 

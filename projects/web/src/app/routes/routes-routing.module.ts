@@ -24,7 +24,14 @@ const routes: Routes = [
         },
       },
       // 业务子模块
-      { path: 'cities', loadChildren: './features/city/city.module#CityModule' }
+      {
+        path: 'cities',
+        loadChildren: './features/city/city.module#CityModule',
+      },
+      {
+        path: 'viewPoints',
+        loadChildren: './features/viewPoint/viewPoint.module#ViewPointModule',
+      },
     ],
   },
   // passport
@@ -62,4 +69,4 @@ const routes: Routes = [
   exports: [],
   providers: [RoutingGuard],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {}

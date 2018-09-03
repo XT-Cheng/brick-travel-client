@@ -11,10 +11,22 @@ import { SidebarNavComponent } from '@shared/components/sidebar/sidebar-nav.comp
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { AMapComponent } from '@shared/components/a-map/a-map.component';
+import { InformationWindowComponent } from '@shared/components/a-map/information-window/information-window.component';
+import { ViewPointMarkerComponent } from '@shared/components/a-map/viewpoint-marker/viewpoint-marker.component';
+import { RateComponent } from '@shared/components/a-map/rate/rate.component';
 
 const THIRDMODULES = [NgZorroAntdModule, TranslateModule];
 
-const COMPONENTS = [SidebarNavComponent, ModalComponent, QuickMenuComponent];
+const COMPONENTS = [
+  SidebarNavComponent,
+  ModalComponent,
+  QuickMenuComponent,
+  AMapComponent,
+  InformationWindowComponent,
+  ViewPointMarkerComponent,
+  RateComponent,
+];
 const DIRECTIVES = [AutofocusDirective];
 
 @NgModule({
@@ -47,4 +59,4 @@ const DIRECTIVES = [AutofocusDirective];
     ...DIRECTIVES,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}
