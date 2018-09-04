@@ -1,31 +1,3 @@
-<!-- <nb-card>
-  <nb-card-header>
-    {{title}}
-  </nb-card-header>
-  <nb-card-body>
-    <form #form="ngForm" class='vp-form' autocomplete="nope">
-      <nb-tabset>           
-        <nb-tab tabTitle='Others'>
-          <div class="form-group">
-            <label for="input-tips">Tips</label>
-            <textarea style='resize: none;' #tips='ngModel' type="text" id='input-tips' placeholder="Tips" class="form-control" [(ngModel)]="newEntity.tips"
-              name='tips'>
-            </textarea>
-          </div>
-          <div class="form-group">
-            <label for="input-description">Description</label>
-            <textarea style='height: 180px;resize: none;' #description='ngModel' placeholder="Description" type="text" id='input-description'
-              class="form-control" [(ngModel)]="newEntity.description" name='description'>
-            </textarea>
-          </div>
-        </nb-tab>
-      </nb-tabset>
-      <button (click)='action()' type="button" [disabled]="isSubmitDisAllowed(form)" class="btn btn-primary">Submit</button>
-      <button (click)='close()' type="button" class="btn btn-danger">Close</button>
-    </form>
-
-  </nb-card-body>
-</nb-card> -->
 <form #form="ngForm" nz-form>
   <nz-tabset>
     <nz-tab nzTitle="General">
@@ -40,7 +12,8 @@
         <nz-form-label nzRequired [nzSpan]="5">Category</nz-form-label>
         <nz-form-control [nzValidateStatus]="isRequiredInValid(category)?'error':'success'" [nzSpan]="19">
           <nz-select #category='ngModel' required [(ngModel)]='newEntity.category' [compareWith]="compareEntityFn" name='category'>
-            <nz-option *ngFor="let category of (_viewPointCategoryService.all$ | async)" [nzLabel]="category.name" [nzValue]="category"></nz-option>
+            <nz-option *ngFor="let category of (_viewPointCategoryService.all$ | async)" [nzLabel]="category.name"
+              [nzValue]="category"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="isRequiredInValid(category)"> Category is required! </nz-form-explain>
         </nz-form-control>
@@ -56,8 +29,8 @@
       <nz-form-item>
         <nz-form-label nzRequired [nzSpan]="5">Time</nz-form-label>
         <nz-form-control [nzValidateStatus]="isNumberInValid(timeNeeded)?'error':'success'" [nzSpan]="19">
-          <nz-input-number required [nzAutoFocus]='true' [nzStep]="0.1" [nzPlaceHolder]='"Time"' #timeNeeded='ngModel' required [(ngModel)]='newEntity.timeNeeded'
-            name='timeNeeded'>
+          <nz-input-number required [nzAutoFocus]='true' [nzStep]="0.1" [nzPlaceHolder]='"Time"' #timeNeeded='ngModel'
+            required [(ngModel)]='newEntity.timeNeeded' name='timeNeeded'>
           </nz-input-number>
           <nz-form-explain *ngIf="isNumberInValid(timeNeeded)"> Time Needed is required! </nz-form-explain>
         </nz-form-control>
@@ -136,13 +109,16 @@
         <nz-form-label [nzSpan]="5">Tips</nz-form-label>
         <nz-form-control [nzSpan]="19">
           <textarea nz-input [(ngModel)]="newEntity.tips" name="tips" placeholder="Tips" [nzAutosize]="{ minRows: 2, maxRows: 6 }">
+
           </textarea>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="5">Description</nz-form-label>
         <nz-form-control [nzSpan]="19">
-          <textarea nz-input [(ngModel)]="newEntity.description" name="description" placeholder="Description" [nzAutosize]="{ minRows: 4, maxRows: 6 }">
+          <textarea nz-input [(ngModel)]="newEntity.description" name="description" placeholder="Description"
+            [nzAutosize]="{ minRows: 4, maxRows: 6 }">
+
           </textarea>
         </nz-form-control>
       </nz-form-item>

@@ -5,10 +5,19 @@
   <section class="content">
     <reuse-tab [debug]='true'></reuse-tab>
     <layout-quick-menu>
-      <button nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()' nzSize="large" nzShape="circle">
+      <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()'
+        nzSize="large" nzShape="circle">
         <i class="anticon anticon-plus"></i>
       </button>
+      <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='openFilter()'
+        nzSize="large" nzShape="circle">
+        <i class="anticon anticon-filter"></i>
+      </button>
     </layout-quick-menu>
+    <nz-drawer [nzClosable]="false" [nzVisible]="isFilterVisible" nzPlacement="right" nzTitle="Basic Drawer"
+      (nzOnClose)='close()'>
+      <app-vp-filter></app-vp-filter>
+    </nz-drawer>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </section>
 </div>

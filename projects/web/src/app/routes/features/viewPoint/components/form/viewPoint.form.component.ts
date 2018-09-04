@@ -1,29 +1,20 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { environment } from '@env/environment';
 import {
-  NzMessageService,
-  NzModalRef,
-  NzModalService,
-  UploadFile,
-} from 'ng-zorro-antd';
-
-import {
-  IViewPoint,
-  ViewPointService,
-  ViewPointUIService,
-  ICityBiz,
-  IViewPointBiz,
   CityService,
   ErrorService,
+  ICityBiz,
+  IViewPoint,
+  IViewPointBiz,
   ViewPointCategoryService,
+  ViewPointService,
+  ViewPointUIService,
 } from '@store';
+import { NzMessageService, NzModalRef, NzModalService, UploadFile } from 'ng-zorro-antd';
 
-import {
-  EntityFormComponent,
-  EntityFormMode,
-} from '../../../entity.form.component';
+import { EntityFormComponent, EntityFormMode } from '../../../entity.form.component';
 import { MapModalComponent } from '../mapModal.component';
-import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-vp-form',
@@ -31,8 +22,8 @@ import { environment } from '@env/environment';
   styleUrls: ['./viewPoint.form.component.scss'],
 })
 export class ViewPointFormComponent extends EntityFormComponent<
-  IViewPoint,
-  IViewPointBiz
+IViewPoint,
+IViewPointBiz
 > {
   //#region Private member
 
@@ -58,7 +49,6 @@ export class ViewPointFormComponent extends EntityFormComponent<
   constructor(
     public _viewPointService: ViewPointService,
     private _modalService: NzModalService,
-    private _element: ElementRef,
     public _viewPointUIService: ViewPointUIService,
     public _viewPointCategoryService: ViewPointCategoryService,
     public _cityService: CityService,

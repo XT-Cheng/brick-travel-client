@@ -6,10 +6,12 @@ import { ViewPointListComponent } from './components/list/viewPoint.list.compone
 import { MapModalComponent } from './components/mapModal.component';
 import { ViewPointRoutingModule } from './viewPoint-routing.module';
 
+// import { ViewPointFilterComponent } from './components/filter/viewPoint.filter.component';
 const VIEWPOINT_COMPONENTS = [
   ViewPointListComponent,
   ViewPointFormComponent,
-  MapModalComponent
+  MapModalComponent,
+  // ViewPointFilterComponent
 ];
 
 @NgModule({

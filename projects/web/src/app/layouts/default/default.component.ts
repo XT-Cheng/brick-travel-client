@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  Router,
-  NavigationEnd,
-  RouteConfigLoadStart,
-  NavigationError,
-} from '@angular/router';
+import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import { MenuService, ScrollService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ScrollService, MenuService } from '@delon/theme';
+
 import { ComponentType } from '../../routes/features/entity.form.component';
 import { EntityListComponent } from '../../routes/features/entity.list.component';
 
@@ -16,7 +12,7 @@ import { EntityListComponent } from '../../routes/features/entity.list.component
 })
 export class LayoutDefaultComponent {
   isFetching = false;
-
+  isFilterVisible = false;
   entityListComp: ComponentType;
 
   constructor(
@@ -54,5 +50,13 @@ export class LayoutDefaultComponent {
 
   newEntity() {
     if (this.entityListComp) this.entityListComp.createEntity();
+  }
+
+  openFilter() {
+    this.isFilterVisible = true;
+  }
+
+  close() {
+    this.isFilterVisible = false;
   }
 }
