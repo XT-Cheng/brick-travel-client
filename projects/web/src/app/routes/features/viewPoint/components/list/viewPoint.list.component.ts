@@ -1,29 +1,23 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  Inject,
-  Renderer2,
-} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  CityService,
+  ErrorService,
+  ICityBiz,
+  IViewPoint,
+  IViewPointBiz,
+  newViewPoint,
+  SearchService,
+  ViewPointService,
+  ViewPointUIService,
+} from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { combineLatest, map, takeUntil } from 'rxjs/operators';
 
 import { EntityListComponent } from '../../../entity.list.component';
 import { ViewPointFormComponent } from '../form/viewPoint.form.component';
-import {
-  IViewPoint,
-  ViewPointService,
-  ViewPointUIService,
-  ICityBiz,
-  IViewPointBiz,
-  CityService,
-  ErrorService,
-  SearchService,
-  newViewPoint,
-} from '@store';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-vp-list',
