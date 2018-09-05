@@ -29,6 +29,18 @@
       "@shared/*": [
         "projects/web/src/app/shared/*"
       ],
+      "@layouts": [
+        "projects/web/src/app/layouts"
+      ],
+      "@layouts/*": [
+        "projects/web/src/app/layouts/*"
+      ],
+      "@routes": [
+        "projects/web/src/app/routes"
+      ],
+      "@routes/*": [
+        "projects/web/src/app/routes/*"
+      ],
       "@testing": [
         "projects/web/src/testing"
       ],

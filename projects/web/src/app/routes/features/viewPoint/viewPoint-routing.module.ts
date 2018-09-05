@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { ViewPointListComponent } from './components/list/viewPoint.list.component';
+import { ViewPointListComponent } from '@routes/features/viewPoint/components/list/viewPoint.list.component';
 
 const routes: Routes = [{
   path: '',

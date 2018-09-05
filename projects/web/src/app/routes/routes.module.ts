@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouteRoutingModule } from './routes-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SharedModule } from '../shared/shared.module';
-import { UserLoginComponent } from './passport/login/login.component';
+import { UserLoginComponent } from '@routes/passport/login/login.component';
+import { RouteRoutingModule } from '@routes/routes-routing.module';
+import { SharedModule } from '@shared/shared.module';
 
-const COMPONENTS = [DashboardComponent, UserLoginComponent];
+const COMPONENTS = [UserLoginComponent];
 
 const COMPONENTS_NOROUNT = [];
 
@@ -13,4 +12,4 @@ const COMPONENTS_NOROUNT = [];
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
 })
-export class RoutesModule {}
+export class RoutesModule { }

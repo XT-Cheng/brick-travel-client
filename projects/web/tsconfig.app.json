@@ -20,6 +20,18 @@
       "@shared/*": [
         "./src/app/shared/*"
       ],
+      "@layouts": [
+        "./src/app/layouts"
+      ],
+      "@layouts/*": [
+        "./src/app/layouts/*"
+      ],
+      "@routes": [
+        "./src/app/routes"
+      ],
+      "@routes/*": [
+        "./src/app/routes/*"
+      ],
       "@env": [
         "./src/environments"
       ],

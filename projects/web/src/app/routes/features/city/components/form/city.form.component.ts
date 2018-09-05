@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ICityBiz, ICity, CityService, ErrorService } from '@store';
-import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
-
-import { EntityFormComponent } from '../../../entity.form.component';
 import { environment } from '@env/environment';
+import { EntityFormComponent } from '@routes/features/entity.form.component';
+import { CityService, ErrorService, ICity, ICityBiz } from '@store';
+import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-city-form',

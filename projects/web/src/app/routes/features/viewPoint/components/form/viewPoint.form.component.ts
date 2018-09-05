@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { environment } from '@env/environment';
+import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
+import { MapModalComponent } from '@routes/features/viewPoint/components/mapModal.component';
 import {
   CityService,
   ErrorService,
@@ -12,9 +14,6 @@ import {
   ViewPointUIService,
 } from '@store';
 import { NzMessageService, NzModalRef, NzModalService, UploadFile } from 'ng-zorro-antd';
-
-import { EntityFormComponent, EntityFormMode } from '../../../entity.form.component';
-import { MapModalComponent } from '../mapModal.component';
 
 @Component({
   selector: 'app-vp-form',

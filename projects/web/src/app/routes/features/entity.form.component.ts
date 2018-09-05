@@ -1,23 +1,13 @@
-import { ViewChild, NgModuleFactory } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EntityService, ErrorService, IBiz, IEntity } from '@store';
 import { ObjectID } from 'bson';
 import { NzMessageService, NzModalRef, UploadFile } from 'ng-zorro-antd';
-import { LayoutDefaultComponent } from '../../layouts/default/default.component';
-import { IEntity, IBiz, EntityService, ErrorService } from '@store';
 
 export enum EntityFormMode {
   create,
   edit,
 }
-
-export interface ComponentType {
-  layoutComp: LayoutDefaultComponent;
-  filterComp(): FilterComp;
-  moduleFactory(): NgModuleFactory<any>;
-  createEntity();
-}
-
-export interface FilterComp {}
 
 export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
   //#region Protected member
@@ -34,7 +24,7 @@ export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
   private _filesMap: Map<string, Map<string, any>> = new Map<
     string,
     Map<string, any>
-  >();
+    >();
 
   //#endregion
 
@@ -93,7 +83,7 @@ export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
     protected _errorService: ErrorService,
     protected _messageService: NzMessageService,
     protected _activeModal: NzModalRef,
-  ) {}
+  ) { }
 
   //#endregion
 
@@ -111,7 +101,7 @@ export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
     return JSON.parse(JSON.stringify(originalEntity));
   }
 
-  protected onOriginalEntitySet() {}
+  protected onOriginalEntitySet() { }
 
   protected fileList(key: string): any[] {
     const result: any[] = [];

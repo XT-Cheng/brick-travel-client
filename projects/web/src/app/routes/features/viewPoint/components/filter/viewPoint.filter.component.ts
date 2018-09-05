@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { FilterComp } from '@routes/features/entity.list.component';
 import { CityService, ICityBiz } from '@store';
-import { FilterComp } from '../../../entity.form.component';
 
 @Component({
   selector: 'app-vp-filter',
@@ -13,7 +13,9 @@ export class ViewPointFilterComponent implements FilterComp {
   //#endregion
 
   //#region Public member
+
   selected: ICityBiz;
+
   //#endregion
 
   //#region Public property
@@ -22,7 +24,7 @@ export class ViewPointFilterComponent implements FilterComp {
 
   //#region Constructor
 
-  constructor(protected _cityService: CityService) {}
+  constructor(protected _cityService: CityService) { }
 
   //#endregion
 

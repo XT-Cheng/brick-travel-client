@@ -1,14 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-  Renderer2,
-  NgModuleFactory,
-  Compiler,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EntityListComponent } from '@routes/features/entity.list.component';
+import { ViewPointFilterComponent } from '@routes/features/viewPoint/components/filter/viewPoint.filter.component';
+import { ViewPointFormComponent } from '@routes/features/viewPoint/components/form/viewPoint.form.component';
 import {
   CityService,
   ErrorService,
@@ -24,11 +19,6 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { combineLatest, map, takeUntil } from 'rxjs/operators';
 
-import { EntityListComponent } from '../../../entity.list.component';
-import { ViewPointFormComponent } from '../form/viewPoint.form.component';
-import { ViewPointFilterComponent } from '../filter/viewPoint.filter.component';
-import { ViewPointModule } from '../../viewPoint.module';
-
 @Component({
   selector: 'app-vp-list',
   templateUrl: 'viewPoint.list.component.html',
@@ -42,7 +32,6 @@ export class ViewPointListComponent
 
   private cityId$: BehaviorSubject<string> = new BehaviorSubject('');
   private _selectedCity: ICityBiz;
-  private _moduleFactory: any;
 
   //#endregion
 
@@ -64,7 +53,7 @@ export class ViewPointListComponent
     protected _messageService: NzMessageService,
     @Inject(DOCUMENT) protected _document: any,
     protected _renderer: Renderer2,
-    private _compiler: Compiler,
+    private _injector: Injector
   ) {
     super(
       _route,
@@ -77,8 +66,6 @@ export class ViewPointListComponent
       _document,
       _renderer,
     );
-
-    this._moduleFactory = this._compiler.compileModuleSync(ViewPointModule);
 
     this.viewPointsByCity$ = this._viewPointService.filteredAndSearched$.pipe(
       combineLatest(this.cityId$),
@@ -142,8 +129,8 @@ export class ViewPointListComponent
     return ViewPointFilterComponent;
   }
 
-  moduleFactory() {
-    return this._moduleFactory;
+  injector() {
+    return this._injector;
   }
   //#endregion
 

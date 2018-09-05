@@ -1,25 +1,21 @@
-import { OnDestroy, OnInit, Renderer2, NgModuleFactory } from '@angular/core';
+import { Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutDefaultComponent } from '@layouts/default/default.component';
+import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
 import { ModalComponent } from '@shared/components/modal/modal.component';
-import {
-  EntityService,
-  ErrorService,
-  IBiz,
-  IEntity,
-  SearchService,
-  UIService,
-} from '@store';
+import { EntityService, ErrorService, IBiz, IEntity, SearchService, UIService } from '@store';
 import { NzMessageService, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { LayoutDefaultComponent } from '../../layouts/default/default.component';
-import {
-  ComponentType,
-  EntityFormComponent,
-  EntityFormMode,
-  FilterComp,
-} from './entity.form.component';
+export interface ComponentType {
+  layoutComp: LayoutDefaultComponent;
+  filterComp(): FilterComp;
+  injector(): Injector;
+  createEntity();
+}
+
+export interface FilterComp { }
 
 export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   implements ComponentType, OnInit, OnDestroy {
@@ -153,7 +149,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   //#region Interface implementation
 
   abstract filterComp(): FilterComp;
-  abstract moduleFactory(): NgModuleFactory<any>;
+  abstract injector(): Injector;
 
   ngOnDestroy(): void {
     this._destroyed$.next(true);

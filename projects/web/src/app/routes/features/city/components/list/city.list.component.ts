@@ -1,24 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Renderer2,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  CityService,
-  CityUIService,
-  ErrorService,
-  ICity,
-  ICityBiz,
-  newCity,
-  SearchService,
-} from '@store';
+import { CityFormComponent } from '@routes/features/city/components/form/city.form.component';
+import { EntityListComponent } from '@routes/features/entity.list.component';
+import { CityService, CityUIService, ErrorService, ICity, ICityBiz, newCity, SearchService } from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-
-import { EntityListComponent } from '../../../entity.list.component';
-import { CityFormComponent } from '../form/city.form.component';
 
 @Component({
   selector: 'app-city-list',
@@ -82,9 +68,8 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
     return null;
   }
 
-  moduleFactory() {
+  injector() {
     return null;
   }
-
   //#endregion
 }

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '@env/environment';
-
-import { LayoutDefaultComponent } from '../layouts/default/default.component';
-import { LayoutPassportComponent } from '../layouts/passport/passport.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserLoginComponent } from './passport/login/login.component';
-import { RoutingGuard } from './route-guard';
+import { LayoutDefaultComponent } from '@layouts/default/default.component';
+import { LayoutPassportComponent } from '@layouts/passport/passport.component';
+import { UserLoginComponent } from '@routes/passport/login/login.component';
+import { RoutingGuard } from '@routes/route-guard';
 
 const routes: Routes = [
   {
@@ -14,16 +12,7 @@ const routes: Routes = [
     component: LayoutDefaultComponent,
     canActivate: [RoutingGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-        data: {
-          title: '仪表盘',
-          titleI18n: 'dashboard',
-        },
-      },
-      // 业务子模块
+      { path: '', redirectTo: 'cities', pathMatch: 'full' },
       {
         path: 'cities',
         loadChildren: './features/city/city.module#CityModule',
@@ -69,4 +58,4 @@ const routes: Routes = [
   exports: [],
   providers: [RoutingGuard],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }

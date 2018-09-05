@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  NavigationEnd,
-  NavigationError,
-  RouteConfigLoadStart,
-  Router,
-} from '@angular/router';
+import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 
-import { ComponentType } from '../../routes/features/entity.form.component';
-import { EntityListComponent } from '../../routes/features/entity.list.component';
+import { ComponentType, EntityListComponent } from '../../routes/features/entity.list.component';
 
 @Component({
   selector: 'layout-default',
@@ -69,7 +63,7 @@ export class LayoutDefaultComponent {
     if (this.entityListComp) return this.entityListComp.filterComp();
   }
 
-  moduleFactory() {
-    if (this.entityListComp) return this.entityListComp.moduleFactory();
+  injector() {
+    if (this.entityListComp) return this.entityListComp.injector();
   }
 }

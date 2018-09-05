@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
+import { ViewPointFilterComponent } from '@routes/features/viewPoint/components/filter/viewPoint.filter.component';
+import { ViewPointFormComponent } from '@routes/features/viewPoint/components/form/viewPoint.form.component';
+import { ViewPointListComponent } from '@routes/features/viewPoint/components/list/viewPoint.list.component';
+import { MapModalComponent } from '@routes/features/viewPoint/components/mapModal.component';
+import { ViewPointRoutingModule } from '@routes/features/viewPoint/viewPoint-routing.module';
 import { SharedModule } from '@shared/shared.module';
-
-import { ViewPointFormComponent } from './components/form/viewPoint.form.component';
-import { ViewPointListComponent } from './components/list/viewPoint.list.component';
-import { MapModalComponent } from './components/mapModal.component';
-import { ViewPointRoutingModule } from './viewPoint-routing.module';
-import { ViewPointFilterComponent } from './components/filter/viewPoint.filter.component';
 
 const VIEWPOINT_COMPONENTS = [
   ViewPointListComponent,
@@ -23,4 +22,4 @@ const VIEWPOINT_COMPONENTS = [
     ViewPointFilterComponent,
   ],
 })
-export class ViewPointModule {}
+export class ViewPointModule { }
