@@ -1,4 +1,4 @@
-import { ViewChild } from '@angular/core';
+import { ViewChild, NgModuleFactory } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ObjectID } from 'bson';
 import { NzMessageService, NzModalRef, UploadFile } from 'ng-zorro-antd';
@@ -12,8 +12,12 @@ export enum EntityFormMode {
 
 export interface ComponentType {
   layoutComp: LayoutDefaultComponent;
+  filterComp(): FilterComp;
+  moduleFactory(): NgModuleFactory<any>;
   createEntity();
 }
+
+export interface FilterComp {}
 
 export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
   //#region Protected member

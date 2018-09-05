@@ -1,13 +1,25 @@
-import { OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { OnDestroy, OnInit, Renderer2, NgModuleFactory } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalComponent } from '@shared/components/modal/modal.component';
-import { EntityService, ErrorService, IBiz, IEntity, SearchService, UIService } from '@store';
+import {
+  EntityService,
+  ErrorService,
+  IBiz,
+  IEntity,
+  SearchService,
+  UIService,
+} from '@store';
 import { NzMessageService, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { LayoutDefaultComponent } from '../../layouts/default/default.component';
-import { ComponentType, EntityFormComponent, EntityFormMode } from './entity.form.component';
+import {
+  ComponentType,
+  EntityFormComponent,
+  EntityFormMode,
+  FilterComp,
+} from './entity.form.component';
 
 export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   implements ComponentType, OnInit, OnDestroy {
@@ -139,6 +151,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   //#endregion
 
   //#region Interface implementation
+
+  abstract filterComp(): FilterComp;
+  abstract moduleFactory(): NgModuleFactory<any>;
+
   ngOnDestroy(): void {
     this._destroyed$.next(true);
     this._destroyed$.complete();
@@ -166,7 +182,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
 
     this._modelRef.afterOpen.subscribe(() => {
       // this.changeBodyOverflow();
-    })
+    });
   }
 
   //#endregion
@@ -177,7 +193,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
 
   //#region Private methods
   private hasBodyScrollBar(): boolean {
-    return window.document.body.scrollHeight > (window.innerHeight || window.document.documentElement.clientHeight);
+    return (
+      window.document.body.scrollHeight >
+      (window.innerHeight || window.document.documentElement.clientHeight)
+    );
   }
 
   private scrollBarWidth(): number {
@@ -185,8 +204,13 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   }
 
   private changeBodyOverflow(): void {
-    if (this.hasBodyScrollBar()) { // Adding padding-right only when body's scrollbar is able to shown up
-      this._renderer.setStyle(this._document.body, 'padding-right', `${this._scrollBarWidth}px`);
+    if (this.hasBodyScrollBar()) {
+      // Adding padding-right only when body's scrollbar is able to shown up
+      this._renderer.setStyle(
+        this._document.body,
+        'padding-right',
+        `${this._scrollBarWidth}px`,
+      );
       this._renderer.setStyle(this._document.body, 'overflow', 'hidden');
     }
   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 
 import { LayoutDefaultComponent } from './default/default.component';
-import { ViewPointFilterComponent } from './default/filter/viewPoint.filter.component';
 import { HeaderFullScreenComponent } from './default/header/components/fullscreen.component';
 import { HeaderIconComponent } from './default/header/components/icon.component';
 import { HeaderNotifyComponent } from './default/header/components/notify.component';
@@ -17,8 +16,9 @@ const COMPONENTS = [
   LayoutDefaultComponent,
   SidebarComponent,
   LayoutPassportComponent,
-  ViewPointFilterComponent
 ];
+
+const ENTRIES = [];
 
 const HEADERCOMPONENTS = [
   HeaderComponent,
@@ -35,5 +35,6 @@ const HEADERCOMPONENTS = [
   providers: [],
   declarations: [...COMPONENTS, ...HEADERCOMPONENTS],
   exports: [...COMPONENTS],
+  entryComponents: [...ENTRIES],
 })
-export class LayoutModule { }
+export class LayoutModule {}

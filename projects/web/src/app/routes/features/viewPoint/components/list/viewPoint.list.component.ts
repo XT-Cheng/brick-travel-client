@@ -1,5 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Renderer2,
+  NgModuleFactory,
+  Compiler,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   CityService,
@@ -18,6 +26,8 @@ import { combineLatest, map, takeUntil } from 'rxjs/operators';
 
 import { EntityListComponent } from '../../../entity.list.component';
 import { ViewPointFormComponent } from '../form/viewPoint.form.component';
+import { ViewPointFilterComponent } from '../filter/viewPoint.filter.component';
+import { ViewPointModule } from '../../viewPoint.module';
 
 @Component({
   selector: 'app-vp-list',
@@ -32,6 +42,7 @@ export class ViewPointListComponent
 
   private cityId$: BehaviorSubject<string> = new BehaviorSubject('');
   private _selectedCity: ICityBiz;
+  private _moduleFactory: any;
 
   //#endregion
 
@@ -53,6 +64,7 @@ export class ViewPointListComponent
     protected _messageService: NzMessageService,
     @Inject(DOCUMENT) protected _document: any,
     protected _renderer: Renderer2,
+    private _compiler: Compiler,
   ) {
     super(
       _route,
@@ -65,6 +77,8 @@ export class ViewPointListComponent
       _document,
       _renderer,
     );
+
+    this._moduleFactory = this._compiler.compileModuleSync(ViewPointModule);
 
     this.viewPointsByCity$ = this._viewPointService.filteredAndSearched$.pipe(
       combineLatest(this.cityId$),
@@ -124,6 +138,13 @@ export class ViewPointListComponent
 
   //#region Public method
 
+  filterComp() {
+    return ViewPointFilterComponent;
+  }
+
+  moduleFactory() {
+    return this._moduleFactory;
+  }
   //#endregion
 
   //#region Protected method

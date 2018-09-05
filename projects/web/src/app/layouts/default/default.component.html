@@ -14,9 +14,9 @@
         <i class="anticon anticon-filter"></i>
       </button>
     </layout-quick-menu>
-    <nz-drawer [nzClosable]="false" [nzVisible]="isFilterVisible" nzPlacement="right" nzTitle="Basic Drawer"
+    <nz-drawer *ngIf='!!filter()' [nzClosable]="false" [nzVisible]="isFilterVisible" nzPlacement="right" nzTitle="Basic Drawer"
       (nzOnClose)='close()'>
-      <app-vp-filter></app-vp-filter>
+      <ng-container *ngComponentOutlet="filter();ngModuleFactory: moduleFactory()"></ng-container>
     </nz-drawer>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </section>

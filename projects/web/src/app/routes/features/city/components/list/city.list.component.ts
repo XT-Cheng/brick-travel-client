@@ -1,7 +1,20 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Renderer2,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CityService, CityUIService, ErrorService, ICity, ICityBiz, newCity, SearchService } from '@store';
+import {
+  CityService,
+  CityUIService,
+  ErrorService,
+  ICity,
+  ICityBiz,
+  newCity,
+  SearchService,
+} from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 import { EntityListComponent } from '../../../entity.list.component';
@@ -39,7 +52,7 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
       _searchService,
       _cityService,
       _document,
-      _renderer
+      _renderer,
     );
   }
   //#endregion
@@ -64,6 +77,14 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
   //#endregion
 
   //#region Public method
+
+  filterComp() {
+    return null;
+  }
+
+  moduleFactory() {
+    return null;
+  }
 
   //#endregion
 }

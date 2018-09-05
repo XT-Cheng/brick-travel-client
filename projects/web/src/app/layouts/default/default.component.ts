@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import {
+  NavigationEnd,
+  NavigationError,
+  RouteConfigLoadStart,
+  Router,
+} from '@angular/router';
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -58,5 +63,13 @@ export class LayoutDefaultComponent {
 
   close() {
     this.isFilterVisible = false;
+  }
+
+  filter() {
+    if (this.entityListComp) return this.entityListComp.filterComp();
+  }
+
+  moduleFactory() {
+    if (this.entityListComp) return this.entityListComp.moduleFactory();
   }
 }
