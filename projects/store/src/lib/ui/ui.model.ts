@@ -18,7 +18,7 @@ export enum STORE_UI_KEY {
 export enum STORE_UI_COMMON_KEY {
   selectedId = 'selectedId',
   searchKey = 'searchKey',
-  filterIds = 'filterIds',
+  filters = 'filters',
 }
 
 export const INIT_UI_STATE: IUIState = {
@@ -40,5 +40,5 @@ export interface IUIState {
 export interface ICommonUI {
   selectedId: string;
   searchKey: string;
-  filterIds: string[];
+  filters: any[];
 }

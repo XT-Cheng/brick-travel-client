@@ -26,13 +26,13 @@ const defaultUIAgendaActionPayload: IUITravelAgendaActionPayload = {
   error: null,
   entityType: null,
   actionId: '',
-  filter: null,
+  filters: [],
 };
 
 export type UITravelAgendaAction = FluxStandardAction<
   IUITravelAgendaActionPayload,
   IActionMetaInfo
->;
+  >;
 
 enum UITravelAgendaActionTypeEnum {
   SELECT_DAILYTRIP = 'UI:TRAVELAGENDA:SELECT_DAILYTRIP',

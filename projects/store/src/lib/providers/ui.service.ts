@@ -19,10 +19,10 @@ export abstract class UIService<T extends IEntity, U extends IBiz> {
   private _searchKey: string;
   private _searchKey$: BehaviorSubject<string> = new BehaviorSubject(null);
 
-  private _filters: IFilterCategoryBiz[];
+  private _filters: any[];
   private _filters$: BehaviorSubject<
-    IFilterCategoryBiz[]
-  > = new BehaviorSubject(null);
+    any[]
+    > = new BehaviorSubject([]);
 
   private _searchAction;
   private _selectAction;
@@ -65,11 +65,11 @@ export abstract class UIService<T extends IEntity, U extends IBiz> {
     return this._searchKey$.asObservable();
   }
 
-  public get filters$(): Observable<IFilterCategoryBiz[]> {
+  public get filters$(): Observable<any[]> {
     return this._filters$.asObservable();
   }
 
-  public filters(): IFilterCategoryBiz[] {
+  public get filters(): any[] {
     return this._filters;
   }
 
@@ -85,12 +85,9 @@ export abstract class UIService<T extends IEntity, U extends IBiz> {
     this._store.dispatch(this._selectAction(bizModel.id));
   }
 
-  public filter(
-    selectedCriteriaId: string,
-    unSelectedCriteriaIds: string[] = [],
-  ) {
+  public filter(filters: any[]) {
     this._store.dispatch(
-      this._filterAction(selectedCriteriaId, unSelectedCriteriaIds),
+      this._filterAction(filters),
     );
   }
 
@@ -108,15 +105,11 @@ export abstract class UIService<T extends IEntity, U extends IBiz> {
 
   private getFilters(
     store: NgRedux<IAppState>,
-  ): Observable<IFilterCategoryBiz[]> {
-    return this._filterCategoryService.getFilters(this.getFilterIds(store));
-  }
-
-  private getFilterIds(store: NgRedux<IAppState>): Observable<string[]> {
-    return store.select<string[]>([
+  ): Observable<any[]> {
+    return store.select<any[]>([
       STORE_KEY.ui,
       this._storeKey,
-      STORE_UI_COMMON_KEY.filterIds,
+      STORE_UI_COMMON_KEY.filters,
     ]);
   }
 

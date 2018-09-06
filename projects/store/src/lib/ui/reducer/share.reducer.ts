@@ -20,22 +20,10 @@ export function shareUIReducer(state, action: UIAction) {
       );
     }
     case UIActionTypeEnum.FILTER: {
-      const filter = action.payload.filter;
-      let filterIds;
-      if (filter) {
-        if (filter.unSelectedCriteriaIds) {
-          filterIds = state[STORE_UI_COMMON_KEY.filterIds].filter(
-            id => !filter.unSelectedCriteriaIds.find(removed => removed === id),
-          );
-        } else {
-          filterIds = state[STORE_UI_COMMON_KEY.filterIds];
-        }
-
-        if (filter.selectedCriteriaId) {
-          filterIds = filterIds.concat(filter.selectedCriteriaId);
-        }
-        return Immutable(state).set(STORE_UI_COMMON_KEY.filterIds, filterIds);
-      }
+      return Immutable(state).set(
+        STORE_UI_COMMON_KEY.filters,
+        action.payload.filters,
+      );
     }
   }
   return state;

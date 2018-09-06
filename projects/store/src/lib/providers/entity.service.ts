@@ -56,7 +56,7 @@ import { StoreConfig } from '../store.config';
 export abstract class EntityService<
   T extends IEntity,
   U extends IBiz
-> extends FetchService {
+  > extends FetchService {
   //#region Entity Actions
 
   protected updateAction: (
@@ -66,8 +66,8 @@ export abstract class EntityService<
     dirtyMode: boolean,
     actionId: string,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityUpdateAction<U>(this._entityType);
 
   protected insertAction: (
@@ -77,8 +77,8 @@ export abstract class EntityService<
     dirtyMode: boolean,
     actionId: string,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityInsertAction<U>(this._entityType);
 
   protected deleteAction: (
@@ -87,24 +87,24 @@ export abstract class EntityService<
     dirtyMode: boolean,
     actionId: string,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityDeleteAction<U>(this._entityType);
 
   protected addDirtyAction: (
     id: string,
     dirtyType: DirtyTypeEnum,
   ) => FluxStandardAction<
-    IDirtyActionPayload,
-    IActionMetaInfo
+  IDirtyActionPayload,
+  IActionMetaInfo
   > = dirtyAddAction(this._entityType);
 
   protected removeDirtyAction: (
     id: string,
     dirtyType?: DirtyTypeEnum,
   ) => FluxStandardAction<
-    IDirtyActionPayload,
-    IActionMetaInfo
+  IDirtyActionPayload,
+  IActionMetaInfo
   > = dirtyRemoveAction(this._entityType);
 
   //#endregion
@@ -147,10 +147,11 @@ export abstract class EntityService<
         this._filtered$.next(value);
       });
 
-      this.getFilteredAndSearched(this._store).subscribe(value => {
-        this._filteredAndSearched = value;
-        this._filteredAndSearched$.next(value);
-      });
+      this._searched$.pipe(
+        combineLatest(this._filtered$, (searched, filtered) => {
+          return searched.filter(s => filtered.find(f => f.id === s.id))
+        })
+      ).subscribe(value => this._filteredAndSearched$.next(value));
     }
   }
 
@@ -186,12 +187,12 @@ export abstract class EntityService<
         map(ct => {
           return ct
             ? denormalize(
-                ct.id,
-                this._entitySchema,
-                Immutable(this._store.getState().entities).asMutable({
-                  deep: true,
-                }),
-              )
+              ct.id,
+              this._entitySchema,
+              Immutable(this._store.getState().entities).asMutable({
+                deep: true,
+              }),
+            )
             : null;
         }),
       );
@@ -234,10 +235,10 @@ export abstract class EntityService<
       map(ct => {
         return ct
           ? denormalize(
-              ct.id,
-              this._entitySchema,
-              Immutable(store.getState().entities).asMutable({ deep: true }),
-            )
+            ct.id,
+            this._entitySchema,
+            Immutable(store.getState().entities).asMutable({ deep: true }),
+          )
           : null;
       }),
     );
@@ -245,8 +246,8 @@ export abstract class EntityService<
 
   private getSearched(store: NgRedux<IAppState>): Observable<U[]> {
     return this.all$.pipe(
-      combineLatest(this._uiService.searchKey$, (cities, searchKey) => {
-        return cities.filter(c => {
+      combineLatest(this._uiService.searchKey$, (entities, searchKey) => {
+        return entities.filter(c => {
           let matchSearchKey = true;
           if (searchKey !== '') {
             matchSearchKey = this.search(c, searchKey);
@@ -260,48 +261,14 @@ export abstract class EntityService<
 
   private getFiltered(store: NgRedux<IAppState>): Observable<U[]> {
     return this._uiService.filters$.pipe(
-      combineLatest(this.all$, (filterCategories, viewPoints) => {
-        return viewPoints.filter(vp => {
-          const isFiltered = filterCategories.every(category => {
-            return category.criteries.every(criteria => {
-              if (criteria.isChecked && FilterEx[category.filterFunction]) {
-                return FilterEx[category.filterFunction](vp, criteria);
-              }
-              return true;
-            });
-          });
+      combineLatest(this.all$, (filters, entities) => {
+        return entities.filter(c => {
+          let matchFilter = true;
+          matchFilter = this.filteredOut(c, filters);
 
-          return isFiltered;
+          return matchFilter;
         });
       }),
-    );
-  }
-
-  private getFilteredAndSearched(store: NgRedux<IAppState>): Observable<U[]> {
-    return this._uiService.filters$.pipe(
-      combineLatest(
-        this.all$,
-        this._uiService.searchKey$,
-        (filterCategories, bizModels, searchKey) => {
-          return bizModels.filter(bizModel => {
-            const isFiltered = filterCategories.every(category => {
-              return category.criteries.every(criteria => {
-                if (criteria.isChecked && FilterEx[category.filterFunction]) {
-                  return FilterEx[category.filterFunction](bizModel, criteria);
-                }
-                return true;
-              });
-            });
-
-            let matchSearchKey = true;
-            if (searchKey !== '') {
-              matchSearchKey = this.search(bizModel, searchKey);
-            }
-
-            return isFiltered && matchSearchKey;
-          });
-        },
-      ),
     );
   }
 
@@ -404,7 +371,7 @@ export abstract class EntityService<
     EntityAction,
     EntityAction,
     IAppState
-  > {
+    > {
     return (action$, store$) =>
       action$
         .ofType(
@@ -588,6 +555,10 @@ export abstract class EntityService<
   }
 
   protected search(bizModel: U, searchKey: any): boolean {
+    return false;
+  }
+
+  protected filteredOut(bizModel: U, filters: any[]): boolean {
     return false;
   }
 

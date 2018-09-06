@@ -9,7 +9,7 @@ import {
 import { IUIActionPayload } from '../ui.action';
 import { shareUIReducer } from './share.reducer';
 
-export interface IUIViewPointActionPayload extends IUIActionPayload {}
+export interface IUIViewPointActionPayload extends IUIActionPayload { }
 
 const defaultUIViewPointActionPayload: IUIViewPointActionPayload = {
   searchKey: '',
@@ -17,13 +17,13 @@ const defaultUIViewPointActionPayload: IUIViewPointActionPayload = {
   error: null,
   entityType: null,
   actionId: '',
-  filter: null,
+  filters: [],
 };
 
 export type UIViewPointAction = FluxStandardAction<
   IUIViewPointActionPayload,
   IActionMetaInfo
->;
+  >;
 
 export function viewPointReducer(
   state = INIT_UI_VIEWPOINT_STATE,

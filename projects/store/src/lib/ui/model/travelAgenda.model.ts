@@ -10,7 +10,7 @@ export const INIT_UI_TRAVELAGENDA_STATE: ITravelAgendaUI = {
   selectedId: '',
   selectedDailyTripId: '',
   selectedTravelViewPointId: '',
-  filterIds: [],
+  filters: [],
 };
 
 export interface ITravelAgendaUI extends ICommonUI {
