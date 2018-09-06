@@ -30,7 +30,7 @@ export class ViewPointFilterComponent implements FilterComp {
 
   //#region Public method
   setFilter() {
-    this._viewPointUIService.filter(null);
+    this._viewPointUIService.filter([{ cityId: this.selected ? this.selected.id : '' }]);
   }
   //#endregion
 

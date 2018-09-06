@@ -6,11 +6,11 @@ import { ICityBiz } from '../bizModel/model/city.biz.model';
 import { EntityTypeEnum } from '../entity/entity.model';
 import { citySchema } from '../entity/entity.schema';
 import { ICity } from '../entity/model/city.model';
+import { StoreConfig } from '../store.config';
 import { IAppState } from '../store.model';
 import { CityUIService } from './city.ui.service';
 import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
-import { StoreConfig } from '../store.config';
 
 @Injectable()
 export class CityService extends EntityService<ICity, ICityBiz> {
@@ -39,6 +39,10 @@ export class CityService extends EntityService<ICity, ICityBiz> {
 
   protected search(bizModel: ICityBiz, searchKey: any): boolean {
     return bizModel.name.indexOf(searchKey) !== -1;
+  }
+
+  protected filteredOut(bizModel: ICityBiz, filters: any[]): boolean {
+    return true;
   }
 
   protected beforeSend(bizModel: ICityBiz): any {

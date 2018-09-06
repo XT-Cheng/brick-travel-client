@@ -66,4 +66,8 @@ export class LayoutDefaultComponent {
   injector() {
     if (this.entityListComp) return this.entityListComp.injector();
   }
+
+  filterCreated(compRef: any) {
+    console.log(compRef);
+  }
 }

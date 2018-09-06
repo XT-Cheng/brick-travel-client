@@ -1,5 +1,4 @@
 /// <reference path="../../typings.d.ts" />
-
 import { NgRedux } from '@angular-redux/store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,7 +6,6 @@ import { denormalize, normalize } from 'normalizr';
 import { Observable } from 'rxjs';
 import * as ImmutableProxy from 'seamless-immutable';
 
-const Immutable = (<any>ImmutableProxy).default || ImmutableProxy;
 import {
   IDailyTripBiz,
   ITravelAgendaBiz,
@@ -19,23 +17,21 @@ import { IViewPointBiz } from '../bizModel/model/viewPoint.biz.model';
 import { DirtyTypeEnum } from '../dirty/dirty.action';
 import { EntityActionTypeEnum } from '../entity/entity.action';
 import { EntityTypeEnum, INIT_ENTITY_STATE } from '../entity/entity.model';
-import {
-  dailyTripSchema,
-  travelAgendaSchema,
-  travelViewPointSchema,
-} from '../entity/entity.schema';
+import { dailyTripSchema, travelAgendaSchema, travelViewPointSchema } from '../entity/entity.schema';
 import { ITravelAgenda } from '../entity/model/travelAgenda.model';
+import { StoreConfig } from '../store.config';
 import { IAppState } from '../store.model';
 import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
 import { TransportationCategoryService } from './transportationCategory.service';
 import { TravelAgendaUIService } from './travelAgenda.ui.service';
-import { StoreConfig } from '../store.config';
 
+
+const Immutable = (<any>ImmutableProxy).default || ImmutableProxy;
 @Injectable()
 export class TravelAgendaService extends EntityService<
-  ITravelAgenda,
-  ITravelAgendaBiz
+ITravelAgenda,
+ITravelAgendaBiz
 > {
   //#region Constructor
   constructor(
@@ -63,6 +59,10 @@ export class TravelAgendaService extends EntityService<
 
   protected search(bizModel: ITravelAgendaBiz, searchKey: any): boolean {
     return bizModel.name.indexOf(searchKey) !== -1;
+  }
+
+  protected filteredOut(bizModel: ITravelAgendaBiz, filters: any[]): boolean {
+    return true;
   }
 
   protected beforeSend(bizModel: ITravelAgendaBiz): any {

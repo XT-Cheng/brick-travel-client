@@ -6,11 +6,11 @@ import { IViewPointBiz } from '../bizModel/model/viewPoint.biz.model';
 import { EntityTypeEnum } from '../entity/entity.model';
 import { viewPointSchema } from '../entity/entity.schema';
 import { IViewPoint } from '../entity/model/viewPoint.model';
+import { StoreConfig } from '../store.config';
 import { IAppState } from '../store.model';
 import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
 import { ViewPointUIService } from './viewPoint.ui.service';
-import { StoreConfig } from '../store.config';
 
 @Injectable()
 export class ViewPointService extends EntityService<IViewPoint, IViewPointBiz> {
@@ -36,6 +36,9 @@ export class ViewPointService extends EntityService<IViewPoint, IViewPointBiz> {
   //#endregion
 
   //#region Protected methods
+  protected filteredOut(bizModel: IViewPointBiz, filters: any[]): boolean {
+    return true;
+  }
 
   protected beforeSend(bizModel: IViewPointBiz) {
     const thumbnail = bizModel.thumbnail.startsWith(`data:image`)

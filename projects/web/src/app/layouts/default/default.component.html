@@ -16,7 +16,9 @@
     </layout-quick-menu>
     <nz-drawer *ngIf='!!filter()' [nzClosable]="false" [nzVisible]="isFilterVisible" nzPlacement="right" nzTitle="Basic Drawer"
       (nzOnClose)='close()'>
-      <ng-container *ngComponentOutlet="filter();injector: injector()"></ng-container>
+      <!-- <ng-container> -->
+      <ng-template [ngComponentOutlet]="filter()" [ngComponentOutletInjector]="injector()"></ng-template>
+      <!-- </ng-container> -->
     </nz-drawer>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </section>
