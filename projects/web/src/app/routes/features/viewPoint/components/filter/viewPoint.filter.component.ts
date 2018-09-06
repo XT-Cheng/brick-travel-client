@@ -29,7 +29,9 @@ export class ViewPointFilterComponent implements FilterComp {
   //#endregion
 
   //#region Public method
+  setFilter() {
 
+  }
   //#endregion
 
   //#region Private method

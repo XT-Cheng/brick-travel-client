@@ -9,8 +9,8 @@
         nzSize="large" nzShape="circle">
         <i class="anticon anticon-plus"></i>
       </button>
-      <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='openFilter()'
-        nzSize="large" nzShape="circle">
+      <button style='margin-right: 5px' [disabled]='!filter()' nz-button nz-tooltip nzTitle="Create" nzType="primary"
+        (click)='openFilter()' nzSize="large" nzShape="circle">
         <i class="anticon anticon-filter"></i>
       </button>
     </layout-quick-menu>
