@@ -13,6 +13,7 @@
       true,
       "element", [
         "app",
+        "bt",
         "layout",
         "header",
         "passport"

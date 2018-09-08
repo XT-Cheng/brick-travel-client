@@ -1,9 +1,8 @@
 import { Component, ComponentRef } from '@angular/core';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { MenuService, ScrollService } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd';
-
 import { ComponentType, EntityListComponent } from '@routes/features/entity.list.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'layout-default',
@@ -46,6 +45,7 @@ export class LayoutDefaultComponent {
   }
 
   onActivate(componentRef): void {
+    this.filterComponent = null;
     if (componentRef instanceof EntityListComponent) {
       this.entityListComp = componentRef;
       this.entityListComp.layoutComp = this;
@@ -74,6 +74,8 @@ export class LayoutDefaultComponent {
 
   hasFilters() {
     if (this.filterComponent === null) return false;
+
+    if (!this.filter()) return false;
 
     return this.filterComponent.currentFilters().length > 0;
   }

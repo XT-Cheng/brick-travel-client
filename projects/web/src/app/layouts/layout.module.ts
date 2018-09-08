@@ -12,6 +12,7 @@ import { HeaderComponent } from './default/header/header.component';
 import { SidebarComponent } from './default/sidebar/sidebar.component';
 import { LayoutPassportComponent } from './passport/passport.component';
 import { DynamicModule } from '@dynamic-component';
+import { SharedComponentModule } from '../shared-component/shared-components.module';
 
 const COMPONENTS = [
   LayoutDefaultComponent,
@@ -34,6 +35,7 @@ const HEADERCOMPONENTS = [
 @NgModule({
   imports: [
     SharedModule,
+    SharedComponentModule,
     DynamicModule.withComponents(null)
   ],
   providers: [],

@@ -2,38 +2,34 @@
  * 进一步对基础模块的导入提炼
  * 有关模块注册指导原则请参考：https://github.com/cipchk/ng-alain/issues/180
  */
-import {
-  NgModule,
-  Optional,
-  SkipSelf,
-  ModuleWithProviders,
-} from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { AlainThemeModule } from '@delon/theme';
-import { DelonABCModule, ReuseTabService, ReuseTabStrategy } from '@delon/abc';
-import { DelonAuthModule, DA_SERVICE_TOKEN } from '@delon/auth';
+import { AdPageHeaderConfig, DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
+import { DelonAuthConfig, DelonAuthModule } from '@delon/auth';
 import { DelonCacheModule } from '@delon/cache';
-import { DelonUtilModule } from '@delon/util';
-// mock
 import { DelonMockModule } from '@delon/mock';
-import * as MOCKDATA from '../../../../_mock';
+import { AlainThemeModule } from '@delon/theme';
+import { DelonUtilModule } from '@delon/util';
 import { environment } from '@env/environment';
+import { throwIfAlreadyLoaded } from '@utilities';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+
+import * as MOCKDATA from '../../../../_mock';
+import { ReuseTabService } from './shared-component/services/reuse-tab/reuse-tab.service';
+import { ReuseTabStrategy } from './shared-component/services/reuse-tab/reuse-tab.strategy';
+
+// mock
 const MOCKMODULE = !environment.production
   ? [DelonMockModule.forRoot({ data: MOCKDATA })]
   : [];
 
 //#region global config functions
 
-import { AdPageHeaderConfig } from '@delon/abc';
 export function pageHeaderConfig(): AdPageHeaderConfig {
   return Object.assign(new AdPageHeaderConfig(), { home_i18n: 'home' });
 }
 
-import { DelonAuthConfig } from '@delon/auth';
-import { throwIfAlreadyLoaded } from '@utilities';
 export function delonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
     login_url: '/passport/login',

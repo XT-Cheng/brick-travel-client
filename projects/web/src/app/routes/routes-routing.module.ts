@@ -5,6 +5,7 @@ import { LayoutDefaultComponent } from '@layouts/default/default.component';
 import { LayoutPassportComponent } from '@layouts/passport/passport.component';
 import { UserLoginComponent } from '@routes/passport/login/login.component';
 import { RoutingGuard } from '@routes/route-guard';
+import { EntityTypeEnum } from '@store';
 
 const routes: Routes = [
   {
@@ -16,10 +17,16 @@ const routes: Routes = [
       {
         path: 'cities',
         loadChildren: './features/city/city.module#CityModule',
+        data: {
+          entityType: EntityTypeEnum.CITY
+        }
       },
       {
         path: 'viewPoints',
         loadChildren: './features/viewPoint/viewPoint.module#ViewPointModule',
+        data: {
+          entityType: EntityTypeEnum.CITY
+        }
       },
     ],
   },

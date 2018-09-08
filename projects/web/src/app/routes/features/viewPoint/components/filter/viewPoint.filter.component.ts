@@ -1,8 +1,10 @@
-import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FilterComp } from '@routes/features/entity.list.component';
 import { CityService, ICityBiz, ViewPointUIService } from '@store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { ReuseTabService } from '../../../../../shared-component/services/reuse-tab/reuse-tab.service';
 
 @Component({
   selector: 'app-vp-filter',
@@ -33,7 +35,8 @@ export class ViewPointFilterComponent implements FilterComp, OnDestroy {
 
   //#region Constructor
 
-  constructor(protected _cityService: CityService, private _viewPointUIService: ViewPointUIService) {
+  constructor(protected _cityService: CityService, private _viewPointUIService: ViewPointUIService,
+    private _reuseTabService: ReuseTabService) {
     this.filterSelectedEvent = new EventEmitter<void>();
 
     this._viewPointUIService.filters$.pipe(
@@ -44,7 +47,8 @@ export class ViewPointFilterComponent implements FilterComp, OnDestroy {
         if (filter.cityId) {
           this.selected = this._cityService.byId(filter.cityId);
         }
-      })
+      });
+      this._reuseTabService.hasFilter = (this._currentFilters.length > 0);
     });
   }
 

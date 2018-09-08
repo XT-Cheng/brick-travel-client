@@ -1,8 +1,4 @@
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpClientModule,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +16,7 @@ import { AppComponent } from './app.component';
 import { DelonModule } from './delon.module';
 import { LayoutModule } from './layouts/layout.module';
 import { RoutesModule } from './routes/routes.module';
+import { SharedComponentModule } from './shared-component/shared-components.module';
 
 export function storeConfig(): StoreConfig {
   return Object.assign(new StoreConfig(), <StoreConfig>{
@@ -58,6 +55,7 @@ export function StartupServiceFactory(
     LayoutModule,
     DelonModule.forRoot(),
     CoreModule,
+    SharedComponentModule
   ],
   providers: [
     {
@@ -72,4 +70,4 @@ export function StartupServiceFactory(
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,0 +1,10 @@
+<nz-tabset [nzSelectedIndex]="pos" [nzAnimated]="false" nzType="line">
+  <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate">
+    <ng-template #titleTemplate>
+      <i *ngIf="i.hasFilter" class="anticon anticon-filter filter"></i>
+      <span [btContextMenu]="i" (click)="to($event, index)" class="name">{{i.title}}</span>
+      <i *ngIf="i.closable" class="anticon anticon-close close" (click)="_close($event, index, false)"></i>
+    </ng-template>
+  </nz-tab>
+</nz-tabset>
+<bt-reuse-tab-context [i18n]="i18n" (change)="cmChange($event)"></bt-reuse-tab-context>
