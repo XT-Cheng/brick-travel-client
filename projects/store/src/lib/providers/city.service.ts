@@ -41,7 +41,7 @@ export class CityService extends EntityService<ICity, ICityBiz> {
     return bizModel.name.indexOf(searchKey) !== -1;
   }
 
-  protected filteredOut(bizModel: ICityBiz, filters: any[]): boolean {
+  protected matchFilter(bizModel: ICityBiz, filters: any[]): boolean {
     return true;
   }
 

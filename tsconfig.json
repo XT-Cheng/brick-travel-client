@@ -64,6 +64,12 @@
       ],
       "@store/*": [
         "dist/store/*"
+      ],
+      "@dynamic-component": [
+        "dist/dynamic-component"
+      ],
+      "@dynamic-component/*": [
+        "dist/dynamic-component/*"
       ]
     }
   }

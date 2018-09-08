@@ -61,7 +61,7 @@ ITravelAgendaBiz
     return bizModel.name.indexOf(searchKey) !== -1;
   }
 
-  protected filteredOut(bizModel: ITravelAgendaBiz, filters: any[]): boolean {
+  protected matchFilter(bizModel: ITravelAgendaBiz, filters: any[]): boolean {
     return true;
   }
 

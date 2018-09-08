@@ -5,20 +5,23 @@
   <section class="content">
     <reuse-tab [debug]='true'></reuse-tab>
     <layout-quick-menu>
-      <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()'
-        nzSize="large" nzShape="circle">
-        <i class="anticon anticon-plus"></i>
-      </button>
-      <button style='margin-right: 5px' [disabled]='!filter()' nz-button nz-tooltip nzTitle="Create" nzType="primary"
-        (click)='openFilter()' nzSize="large" nzShape="circle">
-        <i class="anticon anticon-filter"></i>
-      </button>
+      <nz-badge [nzDot]='false'>
+        <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()'
+          nzSize="large" nzShape="circle">
+          <i class="anticon anticon-plus"></i>
+        </button>
+      </nz-badge>
+      <nz-badge [nzDot]='hasFilters()'>
+        <button style='margin-right: 5px' [disabled]='!filter()' nz-button nz-tooltip nzTitle="Create" nzType="primary"
+          (click)='openFilter()' nzSize="large" nzShape="circle">
+          <i class="anticon anticon-filter"></i>
+        </button>
+      </nz-badge>
     </layout-quick-menu>
     <nz-drawer *ngIf='!!filter()' [nzClosable]="false" [nzVisible]="isFilterVisible" nzPlacement="right" nzTitle="Basic Drawer"
       (nzOnClose)='close()'>
-      <!-- <ng-container> -->
-      <ng-template [ngComponentOutlet]="filter()" [ngComponentOutletInjector]="injector()"></ng-template>
-      <!-- </ng-container> -->
+      <dyn-dynamic (dynComponentCreated)='filterCreated($event)' [dynOutputs]="outputs" [dynComponent]="filter()"
+        [dynInjector]='injector()'></dyn-dynamic>
     </nz-drawer>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </section>

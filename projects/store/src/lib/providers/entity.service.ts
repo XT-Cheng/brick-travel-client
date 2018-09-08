@@ -257,7 +257,7 @@ export abstract class EntityService<
       combineLatest(this.all$, (filters, entities) => {
         return entities.filter(c => {
           let matchFilter = true;
-          matchFilter = this.filteredOut(c, filters);
+          matchFilter = this.matchFilter(c, filters);
 
           return matchFilter;
         });
@@ -551,7 +551,7 @@ export abstract class EntityService<
     return false;
   }
 
-  protected filteredOut(bizModel: U, filters: any[]): boolean {
+  protected matchFilter(bizModel: U, filters: any[]): boolean {
     return false;
   }
 

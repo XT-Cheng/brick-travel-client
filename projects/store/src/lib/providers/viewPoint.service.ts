@@ -36,8 +36,16 @@ export class ViewPointService extends EntityService<IViewPoint, IViewPointBiz> {
   //#endregion
 
   //#region Protected methods
-  protected filteredOut(bizModel: IViewPointBiz, filters: any[]): boolean {
-    return true;
+  protected matchFilter(bizModel: IViewPointBiz, filters: any[]): boolean {
+    let filteredOut = true;
+
+    filters.forEach(filter => {
+      if (filter.cityId) {
+        filteredOut = filteredOut && bizModel.city.id === filter.cityId;
+      }
+    })
+
+    return filteredOut;
   }
 
   protected beforeSend(bizModel: IViewPointBiz) {

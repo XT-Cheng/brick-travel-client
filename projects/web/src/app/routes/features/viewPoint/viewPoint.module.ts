@@ -5,6 +5,7 @@ import { ViewPointListComponent } from '@routes/features/viewPoint/components/li
 import { MapModalComponent } from '@routes/features/viewPoint/components/mapModal.component';
 import { ViewPointRoutingModule } from '@routes/features/viewPoint/viewPoint-routing.module';
 import { SharedModule } from '@shared/shared.module';
+import { DynamicModule } from '@dynamic-component';
 
 const VIEWPOINT_COMPONENTS = [
   ViewPointListComponent,
@@ -14,7 +15,11 @@ const VIEWPOINT_COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ViewPointRoutingModule, SharedModule],
+  imports: [
+    ViewPointRoutingModule,
+    SharedModule,
+    DynamicModule.withComponents([ViewPointFilterComponent])
+  ],
   declarations: [...VIEWPOINT_COMPONENTS],
   entryComponents: [
     ViewPointFormComponent,

@@ -1,4 +1,4 @@
-import { Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Injector, OnDestroy, OnInit, Renderer2, Type } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LayoutDefaultComponent } from '@layouts/default/default.component';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
@@ -10,12 +10,14 @@ import { takeUntil } from 'rxjs/operators';
 
 export interface ComponentType {
   layoutComp: LayoutDefaultComponent;
-  filterComp(): FilterComp;
+  filterComp(): any;
   injector(): Injector;
   createEntity();
 }
 
-export interface FilterComp { }
+export interface FilterComp {
+  currentFilters(): any[];
+}
 
 export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   implements ComponentType, OnInit, OnDestroy {
@@ -148,7 +150,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
 
   //#region Interface implementation
 
-  abstract filterComp(): FilterComp;
+  abstract filterComp(): any;
   abstract injector(): Injector;
 
   ngOnDestroy(): void {

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ComponentRef } from '@angular/core';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 
-import { ComponentType, EntityListComponent } from '../../routes/features/entity.list.component';
+import { ComponentType, EntityListComponent } from '@routes/features/entity.list.component';
 
 @Component({
   selector: 'layout-default',
@@ -13,6 +13,11 @@ export class LayoutDefaultComponent {
   isFetching = false;
   isFilterVisible = false;
   entityListComp: ComponentType;
+  filterComponent: any = null;
+
+  outputs = {
+    filterSelectedEvent: () => this.close()
+  }
 
   constructor(
     router: Router,
@@ -67,7 +72,13 @@ export class LayoutDefaultComponent {
     if (this.entityListComp) return this.entityListComp.injector();
   }
 
-  filterCreated(compRef: any) {
-    console.log(compRef);
+  hasFilters() {
+    if (this.filterComponent === null) return false;
+
+    return this.filterComponent.currentFilters().length > 0;
+  }
+
+  filterCreated(compRef: ComponentRef<any>) {
+    this.filterComponent = compRef.instance;
   }
 }
