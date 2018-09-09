@@ -45,22 +45,22 @@
         "./src/testing/*"
       ],
       "@utilities": [
-        "../../dist/utilities"
+        "./src/app/utilities"
       ],
       "@utilities/*": [
-        "../../dist/utilities/*"
+        "./src/app/utilities/*"
       ],
       "@store": [
-        "../../dist/store"
+        "./src/app/store"
       ],
       "@store/*": [
-        "../../dist/store/*"
+        "./src/app/store/*"
       ],
       "@dynamic-component": [
-        "../../dist/dynamic-component"
+        "./src/app/dynamic-component"
       ],
       "@dynamic-component/*": [
-        "../../dist/dynamic-component/*"
+        "./src/app/dynamic-component/*"
       ]
     }
   },

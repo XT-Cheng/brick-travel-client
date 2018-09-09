@@ -56,7 +56,12 @@ export class ViewPointFilterComponent implements FilterComp, OnDestroy {
 
   //#region Public method
   setFilter() {
-    this._viewPointUIService.filter([{ cityId: this.selected ? this.selected.id : '' }]);
+    if (this.selected) {
+      this._viewPointUIService.filter([{ cityId: this.selected.id }]);
+    } else {
+      this._viewPointUIService.filter([]);
+    }
+
     this.filterSelectedEvent.emit();
   }
 

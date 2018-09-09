@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5">City</nz-form-label>
     <nz-form-control [nzSpan]="19">
-      <nz-select #city='ngModel' [(ngModel)]='selected' [compareWith]="compareEntityFn" name='city'>
+      <nz-select #city='ngModel' nzAllowClear [(ngModel)]='selected' [compareWith]="compareEntityFn" name='city'>
         <nz-option *ngFor="let city of (_cityService.all$ | async)" [nzLabel]="city.name" [nzValue]="city"></nz-option>
       </nz-select>
     </nz-form-control>

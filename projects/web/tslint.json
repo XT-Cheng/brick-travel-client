@@ -5,7 +5,8 @@
       true,
       "attribute", [
         "app",
-        "bt"
+        "bt",
+        "dyn"
       ],
       "camelCase"
     ],
@@ -16,7 +17,8 @@
         "bt",
         "layout",
         "header",
-        "passport"
+        "passport",
+        "dyn"
       ],
       "kebab-case"
     ]

@@ -54,22 +54,22 @@
         "projects/web/src/environments/*"
       ],
       "@utilities": [
-        "dist/utilities"
+        "projects/web/src/app/utilities"
       ],
       "@utilities/*": [
-        "dist/utilities/*"
+        "projects/web/src/app/utilities/*"
       ],
       "@store": [
-        "dist/store"
+        "projects/web/src/app/store"
       ],
       "@store/*": [
-        "dist/store/*"
+        "projects/web/src/app/store/*"
       ],
       "@dynamic-component": [
-        "dist/dynamic-component"
+        "projects/web/src/app/dynamic-component"
       ],
       "@dynamic-component/*": [
-        "dist/dynamic-component/*"
+        "projects/web/src/app/dynamic-component/*"
       ]
     }
   }

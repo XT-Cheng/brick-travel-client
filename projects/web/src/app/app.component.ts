@@ -1,15 +1,9 @@
-import {
-  Component,
-  HostBinding,
-  OnInit,
-  Renderer2,
-  ElementRef,
-} from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { VERSION as VERSION_ALAIN, TitleService } from '@delon/theme';
-import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { Component, ElementRef, HostBinding, OnInit, Renderer2 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { LayoutService } from '@store';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
