@@ -17,8 +17,6 @@ export class CityFormComponent extends EntityFormComponent<ICity, ICityBiz> {
 
   //#region Public member
 
-  uploadUrl = `${environment.SERVER_URL}/fileUpload`;
-
   //#endregion
 
   //#region Public property

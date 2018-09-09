@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { EntityService, ErrorService, IBiz, IEntity } from '@store';
 import { ObjectID } from 'bson';
 import { NzMessageService, NzModalRef, UploadFile } from 'ng-zorro-antd';
+import { environment } from '@env/environment';
 
 export enum EntityFormMode {
   create,
@@ -31,6 +32,8 @@ export abstract class EntityFormComponent<T extends IEntity, U extends IBiz> {
   //#region Public member
 
   public mode: EntityFormMode = EntityFormMode.create;
+
+  public uploadUrl = `${environment.SERVER_URL}/fileUpload`;
 
   //#endregion
 

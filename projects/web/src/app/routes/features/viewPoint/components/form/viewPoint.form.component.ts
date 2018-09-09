@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { environment } from '@env/environment';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
 import { MapModalComponent } from '@routes/features/viewPoint/components/mapModal.component';
 import {
@@ -32,9 +31,12 @@ IViewPointBiz
 
   protected selectedCity: ICityBiz;
 
-  uploadUrl = `${environment.SERVER_URL}/fileUpload`;
+  //#endregion
+
+  //#region Public member
 
   imagesFileList: UploadFile[];
+
   thumbnailFileList: UploadFile[];
 
   //#endregion
