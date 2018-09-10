@@ -53,8 +53,8 @@ export class I18NService implements AlainI18NService {
     return this._langs;
   }
   /** 翻译 */
-  fanyi(key: string) {
-    return this.translate.instant(key);
+  fanyi(key: string, interpolateParams?: Object) {
+    return this.translate.instant(key, interpolateParams);
   }
   /** 默认语言 */
   get defaultLang() {

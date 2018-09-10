@@ -47,7 +47,7 @@ export class StartupService {
     private _userSrv: UserService,
     @Inject(ALAIN_I18N_TOKEN) private _i18n: AlainI18NService,
     @Inject(DA_STORE_TOKEN) private _storeSrv: IStore,
-  ) {}
+  ) { }
 
   private viaHttp(resolve: any, reject: any) {
     resolve({});
@@ -75,6 +75,7 @@ export class StartupService {
     this._applicationService.application$.subscribe(app => {
       const mainNavMenuItem = {
         text: 'Main',
+        i18n: 'Main',
         group: true,
         icon: 'icon-speedometer',
         children: [],
@@ -83,6 +84,7 @@ export class StartupService {
         menu =>
           <Menu>{
             text: menu.name,
+            i18n: menu.name,
             icon: menu.icon,
             link: menu.link,
             linkExact: true,

@@ -5,6 +5,8 @@ import { CityFormComponent } from '@routes/features/city/components/form/city.fo
 import { EntityListComponent } from '@routes/features/entity.list.component';
 import { CityService, CityUIService, ErrorService, ICity, ICityBiz, newCity, SearchService } from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-city-list',
@@ -28,6 +30,7 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
     protected _messageService: NzMessageService,
     @Inject(DOCUMENT) protected _document: any,
     protected _renderer: Renderer2,
+    protected _translate: TranslateService,
   ) {
     super(
       _route,
@@ -39,6 +42,7 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
       _cityService,
       _document,
       _renderer,
+      _translate
     );
   }
   //#endregion
@@ -53,7 +57,7 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
   }
 
   protected get entityDescription(): string {
-    return 'City';
+    return this._translate.instant(`City.Description`);
   }
 
   protected get entityName(): string {

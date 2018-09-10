@@ -64,5 +64,24 @@
   "pro-user": "账户",
   "pro-login": "登录",
   "pro-register": "注册",
-  "pro-register-result": "注册结果"
+  "pro-register-result": "注册结果",
+  "OK": "确定",
+  "Cancel": "取消",
+  "Cities": "城市",
+  "Changed": "{{value}}已更改",
+  "Error": "无法修改{{value}}, 请稍后重试",
+  "ViewPoints": "景点",
+  "Main": "主菜单",
+  "Create": "创建",
+  "Filter": "过滤",
+  "City": {
+    "Description": "城市",
+    "Create": "创建 {{value}}",
+    "Name": "城市名称",
+    "Image": "图片",
+    "Error": {
+      "RequireName": "名称不能为空",
+      "RequireImage": "图片不能为空"
+    }
+  }
 }

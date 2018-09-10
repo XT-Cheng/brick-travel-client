@@ -18,6 +18,8 @@ import {
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { combineLatest, map, takeUntil } from 'rxjs/operators';
+import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vp-list',
@@ -53,7 +55,8 @@ export class ViewPointListComponent
     protected _messageService: NzMessageService,
     @Inject(DOCUMENT) protected _document: any,
     protected _renderer: Renderer2,
-    private _injector: Injector
+    private _injector: Injector,
+    protected _translate: TranslateService,
   ) {
     super(
       _route,
@@ -65,6 +68,7 @@ export class ViewPointListComponent
       _viewPointService,
       _document,
       _renderer,
+      _translate
     );
 
     this.viewPointsByCity$ = this._viewPointService.filteredAndSearched$.pipe(
@@ -114,7 +118,7 @@ export class ViewPointListComponent
   }
 
   protected get entityDescription(): string {
-    return 'ViewPoint';
+    return this._translate.instant(`ViewPoint.Description`);
   }
 
   protected get entityName(): string {

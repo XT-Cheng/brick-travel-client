@@ -1,4 +1,4 @@
-import { Injector, OnDestroy, OnInit, Renderer2, Type } from '@angular/core';
+import { Injector, OnDestroy, OnInit, Renderer2, Type, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LayoutDefaultComponent } from '@layouts/default/default.component';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
@@ -7,6 +7,8 @@ import { EntityService, ErrorService, IBiz, IEntity, SearchService, UIService } 
 import { NzMessageService, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ComponentType {
   layoutComp: LayoutDefaultComponent;
@@ -34,7 +36,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   private _modelRef: NzModalRef;
 
   private _oKBtnOption = {
-    label: 'OK',
+    label: this._translate.instant(`OK`),
     type: 'primary',
     disabled: (componentInstance: EntityFormComponent<T, U>) => {
       return componentInstance.isSubmitDisAllowed();
@@ -42,7 +44,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   };
 
   private _cancelBtnOption = {
-    label: 'Cancel',
+    label: this._translate.instant(`Cancel`),
     onClick: (componentInstance: EntityFormComponent<T, U>) => {
       this._modelRef.close();
     },
@@ -54,14 +56,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
       .subscribe(
         _ => {
           this._modelRef.close();
-          this._messageService.success(
-            `${componentInstance.entityName} changed`,
-          );
+          this._messageService.success(this._translate.instant(`Changed`, { value: componentInstance.entityName }));
         },
         err => {
-          this._messageService.error(
-            `Can't edit ${this.entityDescription}, pls try later`,
-          );
+          this._messageService.error(this._translate.instant(`Error`, { value: componentInstance.entityName }));
         },
       );
   };
@@ -114,6 +112,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
     protected _service: EntityService<T, U>,
     protected _document: any,
     protected _renderer: Renderer2,
+    protected _translate: TranslateService,
   ) {
     this._service.fetch();
     this._searchService
@@ -165,7 +164,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   createEntity() {
     this._scrollBarWidth = this.scrollBarWidth();
     this._modelRef = this._modalService.create({
-      nzTitle: `Create ${this.entityDescription}`,
+      nzTitle: this._translate.instant(`City.Create`, { value: this.entityDescription }),
       nzContent: this.componentType,
       nzComponentParams: {
         mode: EntityFormMode.create,
@@ -190,6 +189,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   //#endregion
 
   //#region Private methods
+  private _onReuseInit() {
+    this._layoutCmp.entityListComp = this;
+  }
+
   private hasBodyScrollBar(): boolean {
     return (
       window.document.body.scrollHeight >
@@ -211,10 +214,6 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
       );
       this._renderer.setStyle(this._document.body, 'overflow', 'hidden');
     }
-  }
-
-  private _onReuseInit() {
-    this._layoutCmp.entityListComp = this;
   }
 
   private editEntity(entity: U, name: string) {

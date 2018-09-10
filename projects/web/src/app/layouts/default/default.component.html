@@ -6,14 +6,14 @@
     <bt-reuse-tab [debug]='true'></bt-reuse-tab>
     <layout-quick-menu>
       <nz-badge [nzDot]='false'>
-        <button style='margin-right: 5px' nz-button nz-tooltip nzTitle="Create" nzType="primary" (click)='newEntity()'
-          nzSize="large" nzShape="circle">
+        <button style='margin-right: 5px' nz-button nz-tooltip [nzTitle]="'Create' | translate" nzType="primary"
+          (click)='newEntity()' nzSize="large" nzShape="circle">
           <i class="anticon anticon-plus"></i>
         </button>
       </nz-badge>
       <nz-badge [nzDot]='hasFilters()'>
-        <button style='margin-right: 5px' [disabled]='!filter()' nz-button nz-tooltip nzTitle="Create" nzType="primary"
-          (click)='openFilter()' nzSize="large" nzShape="circle">
+        <button style='margin-right: 5px' [disabled]='!filter()' nz-button nz-tooltip [nzTitle]="'Filter' | translate"
+          nzType="primary" (click)='openFilter()' nzSize="large" nzShape="circle">
           <i class="anticon anticon-filter"></i>
         </button>
       </nz-badge>
