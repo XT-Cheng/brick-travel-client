@@ -27,20 +27,20 @@
               "projects/web/src/assets"
             ],
             "styles": [
-              "projects/web/src/styles.less"
+              "projects/web/src/styles.less",
+              "projects/web/src/app/shared/components/styles/iconfont.css"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
+              "node_modules/ajv/dist/ajv.bundle.js",
+              "projects/web/src/app/shared/components/styles/iconfont.js"
             ]
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/web/src/environments/environment.ts",
-                  "with": "projects/web/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "projects/web/src/environments/environment.ts",
+                "with": "projects/web/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -52,12 +52,10 @@
               "buildOptimizer": true
             },
             "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/web/src/environments/environment.ts",
-                  "with": "projects/web/src/environments/environment.hmr.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "projects/web/src/environments/environment.ts",
+                "with": "projects/web/src/environments/environment.hmr.ts"
+              }]
             }
           }
         },

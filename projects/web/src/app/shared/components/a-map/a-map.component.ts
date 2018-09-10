@@ -13,19 +13,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  ICityBiz,
-  IDailyTripBiz,
-  IViewPointBiz,
-  ITravelAgendaBiz,
-  ITravelViewPointBiz,
-} from '@store';
+import { ICityBiz, IDailyTripBiz, ITravelAgendaBiz, ITravelViewPointBiz, IViewPointBiz } from '@store';
 import { Subscription } from 'rxjs';
 
-import {
-  ActionAllowed,
-  InformationWindowComponent,
-} from './information-window/information-window.component';
+import { ActionAllowed, InformationWindowComponent } from './information-window/information-window.component';
 import { ViewPointMarkerComponent } from './viewpoint-marker/viewpoint-marker.component';
 
 @Component({
@@ -42,7 +33,7 @@ export class AMapComponent implements AfterViewInit, OnDestroy {
   private _viewPointMarkerFactory: ComponentFactory<ViewPointMarkerComponent>;
   private _informationWindowFactory: ComponentFactory<
     InformationWindowComponent
-  >;
+    >;
   private _markers: Map<string, MarkerInfor>;
   private _pointChoosedMarker: MarkerInfor = null;
   private _pointChoosed: AMap.LngLat = null;
@@ -52,6 +43,8 @@ export class AMapComponent implements AfterViewInit, OnDestroy {
   private _viewPoints: Array<IViewPointBiz> = new Array<IViewPointBiz>();
   private _viewMode: boolean;
   private _city: ICityBiz;
+
+  private _defaultZoom = 12;
 
   //#endregion
 
@@ -227,7 +220,7 @@ export class AMapComponent implements AfterViewInit, OnDestroy {
 
     if (this._pointChoosed) {
       this.generateChoosedPoint(this._pointChoosed);
-      this._map.setCenter(this._pointChoosed);
+      this._map.setZoomAndCenter(this._defaultZoom, this._pointChoosed);
     }
 
     if (this._markers.size === 0) {
