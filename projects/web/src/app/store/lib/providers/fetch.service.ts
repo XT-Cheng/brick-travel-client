@@ -23,8 +23,8 @@ import {
 import { EntityTypeEnum, IEntities } from '../entity/entity.model';
 import { IError } from '../error/error.model';
 import { IActionMetaInfo } from '../store.action';
-import { IAppState } from '../store.model';
 import { StoreConfig } from '../store.config';
+import { IAppState } from '../store.model';
 
 export abstract class FetchService {
   private DEFAULT_PAGE = 0;
@@ -38,7 +38,7 @@ export abstract class FetchService {
     protected _entitySchema: any,
     protected _url: string,
     protected _config: StoreConfig,
-  ) {}
+  ) { }
   //#endregion
 
   //#region Actions
@@ -46,16 +46,16 @@ export abstract class FetchService {
   protected startedAction: (
     actionType: EntityActionTypeEnum,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityActionStarted(this._entityType);
 
   protected succeededAction: (
     actionType: EntityActionTypeEnum,
     entities: IEntities,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityActionSucceeded(this._entityType);
 
   protected failedAction: (
@@ -63,8 +63,8 @@ export abstract class FetchService {
     error: IError,
     actionId: string,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityActionFailed(this._entityType);
 
   protected loadAction: (
@@ -72,8 +72,8 @@ export abstract class FetchService {
     queryCondition: IQueryCondition,
     actionId: string,
   ) => FluxStandardAction<
-    IEntityActionPayload,
-    IActionMetaInfo
+  IEntityActionPayload,
+  IActionMetaInfo
   > = entityLoadAction(this._entityType);
 
   //#endregion
@@ -98,6 +98,14 @@ export abstract class FetchService {
           ).pipe(
             map(data => this.succeededAction(EntityActionTypeEnum.LOAD, data)),
             catchError((errResponse: any) => {
+              if (errResponse instanceof Error) {
+                errResponse['actionError'] = {
+                  actionId: action.payload.actionId,
+                  description: errResponse.message,
+                  stack: errResponse.stack,
+                  network: false,
+                }
+              }
               return of(
                 this.failedAction(
                   EntityActionTypeEnum.LOAD,

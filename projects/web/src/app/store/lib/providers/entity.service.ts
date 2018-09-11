@@ -346,6 +346,14 @@ export abstract class EntityService<
                 this.succeededAction(<EntityActionTypeEnum>action.type, data),
               ),
               catchError((errResponse: any) => {
+                if (errResponse instanceof Error) {
+                  errResponse['actionError'] = {
+                    actionId: action.payload.actionId,
+                    description: errResponse.message,
+                    stack: errResponse.stack,
+                    network: false,
+                  }
+                }
                 return of(
                   this.failedAction(
                     <EntityActionTypeEnum>action.type,
@@ -406,25 +414,40 @@ export abstract class EntityService<
                 this.succeededAction(<EntityActionTypeEnum>action.type, data),
               ),
               catchError((errResponse: any) => {
-                const entities = normalize(
-                  [this.afterReceiveInner(bizModel)],
-                  this.schema,
-                ).entities;
-                return of(this.addDirtyAction(bizModel.id, dirtyType)).pipe(
-                  concat(
-                    of(
-                      this.succeededAction(
-                        <EntityActionTypeEnum>action.type,
-                        entities,
-                      ),
-                      this.failedAction(
-                        <EntityActionTypeEnum>action.type,
-                        errResponse.actionError,
-                        action.payload.actionId,
+                if (errResponse instanceof Error) {
+                  return of(
+                    this.failedAction(
+                      EntityActionTypeEnum.LOAD,
+                      {
+                        actionId: action.payload.actionId,
+                        description: errResponse.message,
+                        stack: errResponse.stack,
+                        network: false,
+                      },
+                      action.payload.actionId,
+                    ),
+                  );
+                } else {
+                  const entities = normalize(
+                    [this.afterReceiveInner(bizModel)],
+                    this.schema,
+                  ).entities;
+                  return of(this.addDirtyAction(bizModel.id, dirtyType)).pipe(
+                    concat(
+                      of(
+                        this.succeededAction(
+                          <EntityActionTypeEnum>action.type,
+                          entities,
+                        ),
+                        this.failedAction(
+                          <EntityActionTypeEnum>action.type,
+                          errResponse.actionError,
+                          action.payload.actionId,
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
               }),
               startWith<any>(
                 this.startedAction(<EntityActionTypeEnum>action.type),
