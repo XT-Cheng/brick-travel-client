@@ -1,9 +1,7 @@
 <div class="logo">
   <a [routerLink]="['/']">
-    <img class="expanded" src="./assets/logo-full.svg" alt="{{(appService.application$ | async).name}}" style="max-height:40px;"
-    />
-    <img class="collapsed" src="./assets/logo.svg" alt="{{(appService.application$ | async).name}}" style="max-height:30px;"
-    />
+    <img class="expanded" src="./assets/logo-full.svg" alt="{{(appService.application$ | async).name}}" style="max-height:40px;" />
+    <img class="collapsed" src="./assets/logo.svg" alt="{{(appService.application$ | async).name}}" style="max-height:30px;" />
   </a>
 </div>
 <div class="top-nav-wrap">
@@ -17,7 +15,9 @@
     <!-- Github Page -->
     <li>
       <a class="item" href="//github.com/cipchk/ng-alain" target="_blank">
-        <i class="anticon anticon-github"></i>
+        <svg class='icon' aria-hidden="true">
+          <use xlink:href='#icon-github'></use>
+        </svg>
       </a>
     </li>
     <!-- Lock Page -->
