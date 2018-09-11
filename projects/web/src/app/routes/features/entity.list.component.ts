@@ -133,6 +133,9 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
   protected abstract get componentType(): any;
   protected abstract get newEntity(): U;
 
+  abstract filterComp(): any;
+  abstract injector(): Injector;
+
   //#endregion
 
   //#region Public property
@@ -149,8 +152,6 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
 
   //#region Interface implementation
 
-  abstract filterComp(): any;
-  abstract injector(): Injector;
 
   ngOnDestroy(): void {
     this._destroyed$.next(true);

@@ -5,7 +5,6 @@ import { CityFormComponent } from '@routes/features/city/components/form/city.fo
 import { EntityListComponent } from '@routes/features/entity.list.component';
 import { CityService, CityUIService, ErrorService, ICity, ICityBiz, newCity, SearchService } from '@store';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -64,10 +63,6 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
     return 'name';
   }
 
-  //#endregion
-
-  //#region Public method
-
   filterComp() {
     return null;
   }
@@ -75,5 +70,10 @@ export class CityListComponent extends EntityListComponent<ICity, ICityBiz> {
   injector() {
     return null;
   }
+
+  //#endregion
+
+  //#region Public method
+
   //#endregion
 }

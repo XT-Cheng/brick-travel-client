@@ -125,10 +125,6 @@ export class ViewPointListComponent
     return 'name';
   }
 
-  //#endregion
-
-  //#region Public method
-
   filterComp() {
     return ViewPointFilterComponent;
   }
@@ -136,6 +132,11 @@ export class ViewPointListComponent
   injector() {
     return this._injector;
   }
+
+  //#endregion
+
+  //#region Public method
+
   //#endregion
 
   //#region Protected method

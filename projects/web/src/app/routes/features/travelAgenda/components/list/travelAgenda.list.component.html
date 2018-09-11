@@ -1,0 +1,15 @@
+<div nz-row>
+  <nz-card nz-col [nzActions]="[actionEdit,actionDelete]" [nzSpan]="6" *ngFor='let ta of (_travelAgendaService.filteredAndSearched$ | async)'
+    class='ta-card' [nzCover]='coverTemplate'>
+    <nz-card-meta [nzTitle]="ta.name"></nz-card-meta>
+    <ng-template #coverTemplate>
+      <img [src]="ta.cover" />
+    </ng-template>
+    <ng-template #actionEdit>
+      <i class="anticon anticon-edit" (click)='edit(ta)'></i>
+    </ng-template>
+    <ng-template #actionDelete>
+      <i class="anticon anticon-delete" (click)='delete(ta)'></i>
+    </ng-template>
+  </nz-card>
+</div>

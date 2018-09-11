@@ -24,7 +24,6 @@ const VIEWPOINT_COMPONENTS = [
   entryComponents: [
     ViewPointFormComponent,
     MapModalComponent,
-    ViewPointFilterComponent,
   ],
 })
 export class ViewPointModule { }

@@ -17,16 +17,14 @@ const routes: Routes = [
       {
         path: 'cities',
         loadChildren: './features/city/city.module#CityModule',
-        data: {
-          entityType: EntityTypeEnum.CITY
-        }
       },
       {
         path: 'viewPoints',
         loadChildren: './features/viewPoint/viewPoint.module#ViewPointModule',
-        data: {
-          entityType: EntityTypeEnum.CITY
-        }
+      },
+      {
+        path: 'travelAgendas',
+        loadChildren: './features/travelAgenda/travelAgenda.module#TravelAgendaModule',
       },
     ],
   },
