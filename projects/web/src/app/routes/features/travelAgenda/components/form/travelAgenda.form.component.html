@@ -9,7 +9,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label nzRequired [nzSpan]="5">{{ 'TravelAgenda.Image' | translate }}</nz-form-label>
+        <nz-form-label nzRequired [nzSpan]="5">Cover</nz-form-label>
         <nz-form-control [nzValidateStatus]="isCoverInValid()?'error':'success'" [nzSpan]="19">
           <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [nzBeforeUpload]="beforeCoverUpload"
             [nzShowUploadList]="false">
@@ -24,18 +24,45 @@
       </nz-form-item>
     </nz-tab>
     <nz-tab nzTitle="Daily Trips">
-      <nz-list [nzDataSource]="originalEntity.dailyTrips" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
-        <ng-template #item let-dt let-i='index'>
-          <nz-list-item>
-            <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team">
-              <ng-template #nzTitle>
-                <a href="https://ng.ant.design">Day {{i}}</a>
-              </ng-template>
-            </nz-list-item-meta>
-          </nz-list-item>
-        </ng-template>
-      </nz-list>
+      <div nz-row>
+        <div nz-col nzSpan='12' style='padding-right: 10px;'>
+          <nz-list class='dt-list' [nzDataSource]="originalEntity.dailyTrips" [nzRenderItem]="dt" [nzFooter]='addNewDailyTrip'
+            [nzItemLayout]="'horizontal'">
+            <ng-template #addNewDailyTrip>
+              <button nzBlock nz-button nzType="primary" [nzSize]="'large'">
+                <svg class='icon' aria-hidden="true">
+                  <use xlink:href='#icon-plus'></use>
+                </svg>
+                Add a new Day
+              </button>
+            </ng-template>
+            <ng-template #dt let-dailyTrip let-i='index'>
+              <nz-list-item class='dt-item' nz-wave [ngClass]="getDailyTripClass(dailyTrip)" (click)='dailyTripSelected(dailyTrip)'>
+                <span class='dt-item-content'>Day {{i}}</span>
+              </nz-list-item>
+            </ng-template>
+          </nz-list>
+        </div>
+        <div nz-col nzSpan='12'>
+          <nz-list class='vp-list' [nzDataSource]="(_travelAgendaService.selectedDailyTrip$ | async)?.travelViewPoints"
+            [nzRenderItem]="vp" [nzItemLayout]="'horizontal'" [nzFooter]='addNewTravelViewPoint'>
+            <ng-template #addNewTravelViewPoint>
+              <button *ngIf='_travelAgendaService.selectedDailyTrip !== null' nzBlock nz-button nzType="primary"
+                [nzSize]="'large'">
+                <svg class='icon' aria-hidden="true">
+                  <use xlink:href='#icon-plus'></use>
+                </svg>
+                Add a new View Point
+              </button>
+            </ng-template>
+            <ng-template #vp let-travelViewPoint>
+              <nz-list-item class='vp-item' nz-wave [ngClass]="getTravelViewPointClass(travelViewPoint)" (click)='travelViewPointSelected(travelViewPoint)'>
+                <span class='vp-item-content'>{{travelViewPoint.viewPoint.name}}</span>
+              </nz-list-item>
+            </ng-template>
+          </nz-list>
+        </div>
+      </div>
     </nz-tab>
   </nz-tabset>
 </form>

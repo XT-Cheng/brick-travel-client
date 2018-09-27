@@ -1,15 +1,16 @@
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
 import {
+  ErrorService,
+  IDailyTripBiz,
   ITravelAgenda,
   ITravelAgendaBiz,
+  ITravelViewPointBiz,
   TravelAgendaService,
-  ErrorService,
-  TravelAgendaUIService
+  TravelAgendaUIService,
 } from '@store';
-import { Component } from '@angular/core';
-import { UploadFile, NzModalService, NzMessageService, NzModalRef } from 'ng-zorro-antd';
-import { FormControl } from '@angular/forms';
-import { MapModalComponent } from '@routes/features/viewPoint/components/mapModal.component';
+import { NzMessageService, NzModalRef, UploadFile } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-ta-form',
@@ -147,6 +148,35 @@ export class TravelAgendaFormComponent extends EntityFormComponent<ITravelAgenda
 
   isCoverInValid(): boolean {
     return !this.newEntity.cover && this.fileList('cover').length === 0;
+  }
+
+  dailyTripSelected(dailyTrip: IDailyTripBiz) {
+    this._travelAgendaUIService.selectDailyTrip(dailyTrip);
+  }
+
+  isDailyTripSelected(dailyTrip: IDailyTripBiz) {
+    return (this._travelAgendaService.selectedDailyTrip && dailyTrip.id === this._travelAgendaService.selectedDailyTrip.id);
+  }
+
+  getDailyTripClass(dailyTrip: IDailyTripBiz) {
+    return {
+      'dt-item-selected': this.isDailyTripSelected(dailyTrip)
+    }
+  }
+
+  travelViewPointSelected(travelViewPoint: ITravelViewPointBiz) {
+    this._travelAgendaUIService.selectTravelViewPoint(travelViewPoint);
+  }
+
+  isTravelViewPointSelected(travelViewPoint: ITravelViewPointBiz) {
+    return (this._travelAgendaService.selectedTravelViewPoint &&
+      travelViewPoint.id === this._travelAgendaService.selectedTravelViewPoint.id);
+  }
+
+  getTravelViewPointClass(travelViewPoint: ITravelViewPointBiz) {
+    return {
+      'vp-item-selected': this.isTravelViewPointSelected(travelViewPoint)
+    }
   }
 
   //#endregion

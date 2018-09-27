@@ -3,9 +3,11 @@ import { NgRedux } from '@angular-redux/store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { denormalize, normalize } from 'normalizr';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import * as ImmutableProxy from 'seamless-immutable';
 
+import { STORE_UI_TRAVELAGENDA_KEY } from '../../../../../../store/src/lib/ui/model/travelAgenda.model';
 import {
   IDailyTripBiz,
   ITravelAgendaBiz,
@@ -15,12 +17,12 @@ import {
 } from '../bizModel/model/travelAgenda.biz.model';
 import { IViewPointBiz } from '../bizModel/model/viewPoint.biz.model';
 import { DirtyTypeEnum } from '../dirty/dirty.action';
-import { EntityActionTypeEnum } from '../entity/entity.action';
+import { EntityActionTypeEnum, getEntityKey, getUIKey } from '../entity/entity.action';
 import { EntityTypeEnum, INIT_ENTITY_STATE } from '../entity/entity.model';
 import { dailyTripSchema, travelAgendaSchema, travelViewPointSchema } from '../entity/entity.schema';
 import { ITravelAgenda } from '../entity/model/travelAgenda.model';
 import { StoreConfig } from '../store.config';
-import { IAppState } from '../store.model';
+import { IAppState, STORE_KEY } from '../store.model';
 import { EntityService } from './entity.service';
 import { ErrorService } from './error.service';
 import { TransportationCategoryService } from './transportationCategory.service';
@@ -52,12 +54,93 @@ ITravelAgendaBiz
       _travelAgendaUISrv,
       _config,
     );
+
+    this.getSelectedDailyTrip(this._store).subscribe(value => {
+      this._selectedDailyTrip = value;
+      this._selectedDailyTrip$.next(value);
+    });
+
+    this.getSelectedTravelViewPoint(this._store).subscribe(value => {
+      this._selectedTravelViewPoint = value;
+      this._selectedTravelViewPoint$.next(value);
+    });
   }
+  //#endregion
+
+  //#region Protected member
+
+  protected _selectedDailyTrip: IDailyTripBiz;
+  protected _selectedDailyTrip$: BehaviorSubject<IDailyTripBiz> = new BehaviorSubject(null);
+
+  protected _selectedTravelViewPoint: ITravelViewPointBiz;
+  protected _selectedTravelViewPoint$: BehaviorSubject<ITravelViewPointBiz> = new BehaviorSubject(null);
+
+  //#endregion
+
+  //#region Private methods
+  private getSelectedDailyTripId(store: NgRedux<IAppState>): Observable<string> {
+    return store.select<string>([
+      STORE_KEY.ui,
+      getUIKey(EntityTypeEnum.TRAVELAGENDA),
+      STORE_UI_TRAVELAGENDA_KEY.selectedDailyTripId,
+    ]);
+  }
+
+  private getSelectedDailyTrip(store: NgRedux<IAppState>): Observable<IDailyTripBiz> {
+    return this.getSelectedDailyTripId(store).pipe(
+      switchMap(id => {
+        return store.select<IDailyTripBiz>([
+          STORE_KEY.entities,
+          getEntityKey(EntityTypeEnum.DAILYTRIP),
+          id,
+        ]);
+      }),
+      map(ct => {
+        return ct
+          ? denormalize(
+            ct.id,
+            dailyTripSchema,
+            Immutable(store.getState().entities).asMutable({ deep: true }),
+          )
+          : null;
+      }),
+    );
+  }
+
+  private getSelectedTravelViewPointId(store: NgRedux<IAppState>): Observable<string> {
+    return store.select<string>([
+      STORE_KEY.ui,
+      getUIKey(EntityTypeEnum.TRAVELAGENDA),
+      STORE_UI_TRAVELAGENDA_KEY.selectedTravelViewPointId,
+    ]);
+  }
+
+  private getSelectedTravelViewPoint(store: NgRedux<IAppState>): Observable<ITravelViewPointBiz> {
+    return this.getSelectedTravelViewPointId(store).pipe(
+      switchMap(id => {
+        return store.select<ITravelViewPointBiz>([
+          STORE_KEY.entities,
+          getEntityKey(EntityTypeEnum.TRAVELVIEWPOINT),
+          id,
+        ]);
+      }),
+      map(ct => {
+        return ct
+          ? denormalize(
+            ct.id,
+            travelViewPointSchema,
+            Immutable(store.getState().entities).asMutable({ deep: true }),
+          )
+          : null;
+      }),
+    );
+  }
+
   //#endregion
 
   //#region Protected methods
 
-  protected search(bizModel: ITravelAgendaBiz, searchKey: any): boolean {
+  protected matchSearch(bizModel: ITravelAgendaBiz, searchKey: any): boolean {
     return bizModel.name.indexOf(searchKey) !== -1;
   }
 
@@ -94,40 +177,71 @@ ITravelAgendaBiz
     };
   }
 
-  protected afterReceive(record: any) {
-    return {
-      id: record.id,
-      name: record.name,
-      user: record.user,
-      cover: record.cover,
-      dailyTrips: record.dailyTrips.map(dailyTrip => {
-        return {
-          id: dailyTrip.id,
-          travelAgenda: record.id,
-          lastViewPoint: dailyTrip.lastViewPoint
-            ? dailyTrip.lastViewPoint.id
-              ? dailyTrip.lastViewPoint.id
-              : dailyTrip.lastViewPoint
-            : null,
-          travelViewPoints: dailyTrip.travelViewPoints.map(travelViewPoint => {
-            return {
-              id: travelViewPoint.id,
-              dailyTrip: dailyTrip.id,
-              viewPoint: travelViewPoint.viewPoint.id
-                ? travelViewPoint.viewPoint.id
-                : travelViewPoint.viewPoint,
-              distanceToNext: travelViewPoint.distanceToNext,
-              transportationToNext: travelViewPoint.transportationToNext
-                ? travelViewPoint.transportationToNext.id
-                  ? travelViewPoint.transportationToNext.id
-                  : travelViewPoint.transportationToNext
-                : null,
-            };
-          }),
-        };
-      }),
-    };
-  }
+  // protected afterReceive(record: any) {
+  // return {
+  //   id: record.id,
+  //   name: record.name,
+  //   user: record.user,
+  //   cover: record.cover,
+  //   dailyTrips: record.dailyTrips.map(dailyTrip => {
+  //     return {
+  //       id: dailyTrip.id,
+  //       travelAgenda: record.id,
+  //       lastViewPoint: dailyTrip.lastViewPoint
+  //         ? dailyTrip.lastViewPoint.id
+  //           ? dailyTrip.lastViewPoint.id
+  //           : dailyTrip.lastViewPoint
+  //         : null,
+  //       travelViewPoints: dailyTrip.travelViewPoints.map(travelViewPoint => {
+  //         return {
+  //           id: travelViewPoint.id,
+  //           dailyTrip: dailyTrip.id,
+  //           viewPoint: travelViewPoint.viewPoint.id
+  //             ? travelViewPoint.viewPoint.id
+  //             : travelViewPoint.viewPoint,
+  //           distanceToNext: travelViewPoint.distanceToNext,
+  //           transportationToNext: travelViewPoint.transportationToNext
+  //             ? travelViewPoint.transportationToNext.id
+  //               ? travelViewPoint.transportationToNext.id
+  //               : travelViewPoint.transportationToNext
+  //             : null,
+  //         };
+  //       }),
+  //     };
+  //   }),
+  // };
+  // return record;
+  // return {
+  //   id: record.id,
+  //   name: record.name,
+  //   user: record.user,
+  //   cover: record.cover,
+  //   dailyTrips: record.dailyTrips.map(dailyTrip => {
+  //     return {
+  //       id: dailyTrip.id,
+  //       travelAgenda: record.id,
+  //       lastViewPoint: dailyTrip.lastViewPoint
+  //         ? dailyTrip.lastViewPoint.id
+  //           ? dailyTrip.lastViewPoint.id
+  //           : dailyTrip.lastViewPoint
+  //         : null,
+  //       travelViewPoints: dailyTrip.travelViewPoints.map(travelViewPoint => {
+  //         return {
+  //           id: travelViewPoint.id,
+  //           dailyTrip: dailyTrip.id,
+  //           viewPoint: travelViewPoint.viewPoint,
+  //           distanceToNext: travelViewPoint.distanceToNext,
+  //           transportationToNext: travelViewPoint.transportationToNext
+  //             ? travelViewPoint.transportationToNext.id
+  //               ? travelViewPoint.transportationToNext.id
+  //               : travelViewPoint.transportationToNext
+  //             : null,
+  //         };
+  //       }),
+  //     };
+  //   }),
+  // };
+  // }
   //#endregion
 
   //#region Public methods
@@ -220,6 +334,22 @@ ITravelAgendaBiz
     this._store.dispatch(
       this.addDirtyAction(travelAgenda.id, DirtyTypeEnum.UPDATED),
     );
+  }
+
+  public get selectedDailyTrip(): IDailyTripBiz {
+    return this._selectedDailyTrip;
+  }
+
+  public get selectedDailyTrip$(): Observable<IDailyTripBiz> {
+    return this._selectedDailyTrip$.asObservable();
+  }
+
+  public get selectedTravelViewPoint(): ITravelViewPointBiz {
+    return this._selectedTravelViewPoint;
+  }
+
+  public get selectedTravelViewPoint$(): Observable<ITravelViewPointBiz> {
+    return this._selectedTravelViewPoint$.asObservable();
   }
 
   //#endregion

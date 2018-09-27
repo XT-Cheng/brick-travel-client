@@ -1,17 +1,21 @@
-import { ChangeDetectionStrategy, Component, Renderer2, Inject, Injector } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject, Injector, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-
-import { EntityListComponent } from '../../../entity.list.component';
+import { TranslateService } from '@ngx-translate/core';
+import { TravelAgendaFormComponent } from '@routes/features/travelAgenda/components/form/travelAgenda.form.component';
 import {
+  ErrorService,
   ITravelAgenda,
   ITravelAgendaBiz,
+  newTravelAgenda,
   SearchService,
-  ViewPointService, ErrorService, TravelAgendaService, TravelAgendaUIService, newTravelAgenda
+  TravelAgendaService,
+  TravelAgendaUIService,
+  ViewPointService,
 } from '@store';
-import { TranslateService } from '@ngx-translate/core';
-import { DOCUMENT } from '@angular/common';
-import { TravelAgendaFormComponent } from '@routes/features/travelAgenda/components/form/travelAgenda.form.component';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+
+import { EntityListComponent, ModelConfig } from '../../../entity.list.component';
 
 @Component({
   selector: 'bt-ta-list',
@@ -59,6 +63,12 @@ export class TravelAgendaListComponent extends EntityListComponent<ITravelAgenda
 
   protected get entityName(): string {
     return 'name';
+  }
+
+  protected get modelConfig(): ModelConfig {
+    return {
+      nzWidth: 800
+    };
   }
 
   filterComp() {

@@ -37,7 +37,7 @@ export class CityService extends EntityService<ICity, ICityBiz> {
 
   //#region Protected methods
 
-  protected search(bizModel: ICityBiz, searchKey: any): boolean {
+  protected matchSearch(bizModel: ICityBiz, searchKey: any): boolean {
     return bizModel.name.indexOf(searchKey) !== -1;
   }
 

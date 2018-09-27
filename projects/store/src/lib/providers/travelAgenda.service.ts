@@ -1,4 +1,3 @@
-/// <reference path="../../typings.d.ts" />
 import { NgRedux } from '@angular-redux/store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -26,6 +25,7 @@ import { ErrorService } from './error.service';
 import { TransportationCategoryService } from './transportationCategory.service';
 import { TravelAgendaUIService } from './travelAgenda.ui.service';
 
+// <reference path="../../typings.d.ts" />
 
 const Immutable = (<any>ImmutableProxy).default || ImmutableProxy;
 @Injectable()
@@ -57,7 +57,7 @@ ITravelAgendaBiz
 
   //#region Protected methods
 
-  protected search(bizModel: ITravelAgendaBiz, searchKey: any): boolean {
+  protected matchSearch(bizModel: ITravelAgendaBiz, searchKey: any): boolean {
     return bizModel.name.indexOf(searchKey) !== -1;
   }
 

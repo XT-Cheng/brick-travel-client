@@ -243,7 +243,7 @@ export abstract class EntityService<
         return entities.filter(c => {
           let matchSearchKey = true;
           if (searchKey !== '') {
-            matchSearchKey = this.search(c, searchKey);
+            matchSearchKey = this.matchSearch(c, searchKey);
           }
 
           return matchSearchKey;
@@ -570,7 +570,7 @@ export abstract class EntityService<
     }
   }
 
-  protected search(bizModel: U, searchKey: any): boolean {
+  protected matchSearch(bizModel: U, searchKey: any): boolean {
     return false;
   }
 

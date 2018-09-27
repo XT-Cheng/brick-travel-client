@@ -1,14 +1,17 @@
-import { Injector, OnDestroy, OnInit, Renderer2, Type, Inject } from '@angular/core';
+import { Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LayoutDefaultComponent } from '@layouts/default/default.component';
+import { TranslateService } from '@ngx-translate/core';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
 import { ModalComponent } from '@shared/components/modal/modal.component';
 import { EntityService, ErrorService, IBiz, IEntity, SearchService, UIService } from '@store';
 import { NzMessageService, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
-import { TranslateService } from '@ngx-translate/core';
+
+export interface ModelConfig {
+  nzWidth: number
+}
 
 export interface ComponentType {
   layoutComp: LayoutDefaultComponent;
@@ -230,6 +233,7 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
         { ...this._oKBtnOption, ...{ onClick: this._changeAction } },
         this._cancelBtnOption,
       ],
+      ...this.modelConfig
     });
   }
 
@@ -273,6 +277,10 @@ export abstract class EntityListComponent<T extends IEntity, U extends IBiz>
 
   protected get deleteEntityParas(): any {
     return {};
+  }
+
+  protected get modelConfig(): ModelConfig {
+    return null;
   }
 
   protected edit(entity: U) {

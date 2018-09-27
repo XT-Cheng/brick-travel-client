@@ -1,24 +1,20 @@
 import { FluxStandardAction } from 'flux-standard-action';
 import * as ImmutableProxy from 'seamless-immutable';
 
-const Immutable = (<any>ImmutableProxy).default || ImmutableProxy;
-
 import { EntityTypeEnum } from '../../entity/entity.model';
 import { IActionMetaInfo } from '../../store.action';
-import {
-  INIT_UI_TRAVELAGENDA_STATE,
-  ITravelAgendaUI,
-  STORE_UI_TRAVELAGENDA_KEY,
-} from '../model/travelAgenda.model';
+import { INIT_UI_TRAVELAGENDA_STATE, ITravelAgendaUI, STORE_UI_TRAVELAGENDA_KEY } from '../model/travelAgenda.model';
 import { IUIActionPayload } from '../ui.action';
 import { shareUIReducer } from './share.reducer';
+
+const Immutable = (<any>ImmutableProxy).default || ImmutableProxy;
 
 export interface IUITravelAgendaActionPayload extends IUIActionPayload {
   selectedDailyTripId: string;
   selectedTravelViewPointId: string;
 }
 
-const defaultUIAgendaActionPayload: IUITravelAgendaActionPayload = {
+export const defaultUIAgendaActionPayload: IUITravelAgendaActionPayload = {
   searchKey: '',
   selectedId: '',
   selectedDailyTripId: '',
@@ -34,7 +30,7 @@ export type UITravelAgendaAction = FluxStandardAction<
   IActionMetaInfo
   >;
 
-enum UITravelAgendaActionTypeEnum {
+export enum UITravelAgendaActionTypeEnum {
   SELECT_DAILYTRIP = 'UI:TRAVELAGENDA:SELECT_DAILYTRIP',
   SELECT_TRAVELVIEWPOINT = 'UI:TRAVELAGENDA:SELECT_TRAVELVIEWPOINT',
 }

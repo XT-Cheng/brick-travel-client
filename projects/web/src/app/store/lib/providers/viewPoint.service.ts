@@ -62,7 +62,7 @@ export class ViewPointService extends EntityService<IViewPoint, IViewPointBiz> {
     });
   }
 
-  protected search(bizModel: IViewPointBiz, searchKey: any): boolean {
+  protected matchSearch(bizModel: IViewPointBiz, searchKey: any): boolean {
     return (
       bizModel.name.indexOf(searchKey) !== -1 ||
       bizModel.tags.findIndex(value => value === searchKey) !== -1
