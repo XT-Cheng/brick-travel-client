@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EntityFormComponent, EntityFormMode } from '@routes/features/entity.form.component';
 import {
@@ -11,13 +12,16 @@ import {
   TravelAgendaUIService,
 } from '@store';
 import { NzMessageService, NzModalRef, UploadFile } from 'ng-zorro-antd';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-ta-form',
   templateUrl: 'travelAgenda.form.component.html',
   styleUrls: ['./travelAgenda.form.component.scss'],
 })
-export class TravelAgendaFormComponent extends EntityFormComponent<ITravelAgenda, ITravelAgendaBiz> {
+export class TravelAgendaFormComponent extends EntityFormComponent<ITravelAgenda, ITravelAgendaBiz>
+  implements AfterViewInit, OnDestroy {
+
   //#region Private member
 
   //#endregion
@@ -39,20 +43,33 @@ export class TravelAgendaFormComponent extends EntityFormComponent<ITravelAgenda
   //#region Constructor
 
   constructor(
+    @Inject(DOCUMENT) private _document: Document,
+    private _element: ElementRef,
     public _travelAgendaService: TravelAgendaService,
     public _travelAgendaUIService: TravelAgendaUIService,
     protected _errorService: ErrorService,
     protected _messageService: NzMessageService,
     protected _activeModal: NzModalRef,
+    private _dragulaService: DragulaService
   ) {
     super(_travelAgendaService, _errorService, _messageService, _activeModal);
 
     this.addFile('cover');
 
     this.coverFileList = this.fileList('cover');
+
+    this._travelAgendaService.selectedDailyTrip$.subscribe(selected => this.initTravelViewPointGroup(selected));
   }
 
   //#region Interface implementation
+  ngOnDestroy(): void {
+    this._dragulaService.destroy('dt-list');
+    this._dragulaService.destroy('tvp-list');
+  }
+
+  ngAfterViewInit(): void {
+    this.initDailyTripGroup();
+  }
 
   isDataInvalid(): boolean {
     return (
@@ -182,6 +199,37 @@ export class TravelAgendaFormComponent extends EntityFormComponent<ITravelAgenda
   //#endregion
 
   //#region Private method
+  private initDailyTripGroup() {
+    this._dragulaService.destroy('dt-list');
 
+    const group = this._dragulaService.createGroup(`dt-list`, {});
+    group.drake.containers.push(this._element.nativeElement.querySelector(`.dt-list div.ant-spin-container`));
+    group.drake.models = [this.newEntity.dailyTrips];
+    this._dragulaService.dropModel<IDailyTripBiz>(`dt-list`).subscribe((value) => {
+      const temp = this.newEntity.dailyTrips[value.sourceIndex];
+      this.newEntity.dailyTrips[value.sourceIndex] = this.newEntity.dailyTrips[value.targetIndex];
+      this.newEntity.dailyTrips[value.targetIndex] = temp;
+    });
+  }
+
+  private initTravelViewPointGroup(selected: IDailyTripBiz) {
+    if (!selected) {
+      return;
+    }
+
+    this._dragulaService.destroy('vp-list');
+
+    const group = this._dragulaService.createGroup(`vp-list`, {});
+    group.drake.containers.push(this._element.nativeElement.querySelector(`.vp-list div.ant-spin-container`));
+    const dailyTrip = this.newEntity.dailyTrips.find(dt => dt.id === selected.id);
+    group.drake.models = [dailyTrip.travelViewPoints];
+    this._dragulaService.dropModel<ITravelViewPointBiz>(`vp-list`).subscribe((value) => {
+      const found = this.newEntity.dailyTrips.find(dt => dt.id === value.item.dailyTrip.id);
+
+      const temp = found.travelViewPoints[value.sourceIndex];
+      found.travelViewPoints[value.sourceIndex] = found.travelViewPoints[value.targetIndex];
+      found.travelViewPoints[value.targetIndex] = temp;
+    });
+  }
   //#endregion
 }

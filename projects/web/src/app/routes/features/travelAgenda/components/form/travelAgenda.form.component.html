@@ -37,7 +37,7 @@
               </button>
             </ng-template>
             <ng-template #dt let-dailyTrip let-i='index'>
-              <nz-list-item class='dt-item' nz-wave [ngClass]="getDailyTripClass(dailyTrip)" (click)='dailyTripSelected(dailyTrip)'>
+              <nz-list-item class='dt-item' [ngClass]="getDailyTripClass(dailyTrip)" (click)='dailyTripSelected(dailyTrip)'>
                 <span class='dt-item-content'>Day {{i}}</span>
               </nz-list-item>
             </ng-template>

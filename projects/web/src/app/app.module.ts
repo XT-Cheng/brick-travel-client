@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from '@shared/shared.module';
 import { StoreConfig, StoreModule } from '@store';
+import { DragulaModule } from 'ng2-dragula';
 
 import { AppComponent } from './app.component';
 import { DelonModule } from './delon.module';
@@ -55,7 +56,8 @@ export function StartupServiceFactory(
     LayoutModule,
     DelonModule.forRoot(),
     CoreModule,
-    SharedComponentModule
+    SharedComponentModule,
+    DragulaModule.forRoot(),
   ],
   providers: [
     {
