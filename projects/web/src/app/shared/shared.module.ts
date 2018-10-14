@@ -14,6 +14,7 @@ import { QuickMenuComponent } from '@shared/components/quick-menu.component';
 import { SidebarNavComponent } from '@shared/components/sidebar/sidebar-nav.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
+import { DailyTripsComponent } from './components/dailyTrips/dailyTrips.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 
 const THIRDMODULES = [NgZorroAntdModule, TranslateModule];
@@ -26,6 +27,7 @@ const COMPONENTS = [
   InformationWindowComponent,
   ViewPointMarkerComponent,
   RateComponent,
+  DailyTripsComponent
 ];
 const DIRECTIVES = [AutofocusDirective];
 

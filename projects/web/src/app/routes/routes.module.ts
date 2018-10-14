@@ -3,7 +3,9 @@ import { UserLoginComponent } from '@routes/passport/login/login.component';
 import { RouteRoutingModule } from '@routes/routes-routing.module';
 import { SharedModule } from '@shared/shared.module';
 
-const COMPONENTS = [UserLoginComponent];
+import { TestComponent } from './test/test.component';
+
+const COMPONENTS = [UserLoginComponent, TestComponent];
 
 const COMPONENTS_NOROUNT = [];
 

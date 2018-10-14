@@ -18,7 +18,8 @@
         "layout",
         "header",
         "passport",
-        "dyn"
+        "dyn",
+        "bt"
       ],
       "kebab-case"
     ]

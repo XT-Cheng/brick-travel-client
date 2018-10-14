@@ -1,0 +1,38 @@
+<div nz-row>
+  <div nz-col nzSpan='12' style='padding-right: 10px;'>
+    <nz-list class='dt-list' [nzDataSource]="dailyTrips" [nzRenderItem]="dt" [nzFooter]='addNewDailyTrip'
+      [nzItemLayout]="'horizontal'">
+      <ng-template #addNewDailyTrip>
+        <button nzBlock nz-button nzType="primary" [nzSize]="'large'">
+          <svg class='icon' aria-hidden="true">
+            <use xlink:href='#icon-plus'></use>
+          </svg>
+          Add a new Day
+        </button>
+      </ng-template>
+      <ng-template #dt let-dailyTrip let-i='index'>
+        <nz-list-item class='dt-item' [ngClass]="getDailyTripClass(dailyTrip)" (click)='dailyTripSelected(dailyTrip)'>
+          <span class='dt-item-content'>Day {{i}}</span>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+  <div nz-col nzSpan='12'>
+    <nz-list class='vp-list' [nzDataSource]="selectedDailyTrip?.travelViewPoints" [nzRenderItem]="vp" [nzItemLayout]="'horizontal'"
+      [nzFooter]='addNewTravelViewPoint'>
+      <ng-template #addNewTravelViewPoint>
+        <button *ngIf='selectedDailyTrip !== null' nzBlock nz-button nzType="primary" [nzSize]="'large'">
+          <svg class='icon' aria-hidden="true">
+            <use xlink:href='#icon-plus'></use>
+          </svg>
+          Add a new View Point
+        </button>
+      </ng-template>
+      <ng-template #vp let-travelViewPoint>
+        <nz-list-item class='vp-item' nz-wave [ngClass]="getTravelViewPointClass(travelViewPoint)" (click)='travelViewPointSelected(travelViewPoint)'>
+          <span class='vp-item-content'>{{travelViewPoint.name}}</span>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

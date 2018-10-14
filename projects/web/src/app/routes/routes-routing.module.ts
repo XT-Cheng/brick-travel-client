@@ -5,7 +5,8 @@ import { LayoutDefaultComponent } from '@layouts/default/default.component';
 import { LayoutPassportComponent } from '@layouts/passport/passport.component';
 import { UserLoginComponent } from '@routes/passport/login/login.component';
 import { RoutingGuard } from '@routes/route-guard';
-import { EntityTypeEnum } from '@store';
+
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
       // { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果', titleI18n: 'pro-register-result' } }
     ],
   },
+  { path: 'test', component: TestComponent },
   // 全屏布局
   // {
   //     path: 'fullscreen',
