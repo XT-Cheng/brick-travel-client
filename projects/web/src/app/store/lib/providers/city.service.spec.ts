@@ -1,7 +1,7 @@
 import { HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed } from '@angular/core/testing';
 
-import { initTest } from '../../test';
+import { initTest } from '../../../../test';
 import { ICityBiz } from '../bizModel/model/city.biz.model';
 import { CityService } from './city.service';
 import { ErrorService } from './error.service';
@@ -53,7 +53,7 @@ describe('city test', () => {
   });
 
   describe('fetch test', () => {
-    it('#fetch()', () => {
+    fit('#fetch()', () => {
       service.fetch();
       const req = httpTestingController.expectOne(url);
       req.flush([cityData]);

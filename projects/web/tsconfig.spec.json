@@ -15,5 +15,19 @@
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"
-  ]
+  ],
+  "paths": {
+    "@core": [
+      "./src/app/core"
+    ],
+    "@core/*": [
+      "./src/app/core/*"
+    ],
+    "@store": [
+      "./src/app/store"
+    ],
+    "@store/*": [
+      "./src/app/store/*"
+    ]
+  }
 }
